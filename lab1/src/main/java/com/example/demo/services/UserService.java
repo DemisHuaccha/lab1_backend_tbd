@@ -34,19 +34,6 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public Boolean verificarUser(String email, String password){
-        Optional<Users> user = userRepository.findByEmail(email);
-        if(user.isEmpty()){
-            return false;
-        }
-        else if (user.get().getPassword_user().equals(PasswordUtil.hashPassword(password))) {
-            return true;
-        } else {
-            return false;
-        }
-
-    }
-
     public void updateUser(Users user) {
         user.setPassword_user(PasswordUtil.hashPassword(user.getPassword_user()));
         userRepository.update(user);

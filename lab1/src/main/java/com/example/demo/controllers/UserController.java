@@ -27,30 +27,11 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    @GetMapping("/email/{email}")
-    public Users getUserByEmail(@PathVariable String email) {
-
-        Optional<Users> user= userService.getUserByEmail(email);
-        if(user.isEmpty()){
-            throw new RuntimeException("Usuario no encontrado: ");
-        }
-        else {
-            return user.get();
-        }
-    }
 
     @PutMapping("/update")
     public ResponseEntity<String> updateUser(@RequestBody Users user) {
         userService.updateUser(user);
         return ResponseEntity.ok("Usuario actualizado");
     }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
-        return ResponseEntity.ok("Usuario eliminado");
-    }
-
-
 
 }
