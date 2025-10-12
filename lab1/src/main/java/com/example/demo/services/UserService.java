@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import com.example.demo.Dtos.Roles;
 import com.example.demo.config.PasswordUtil;
 import com.example.demo.entities.Users;
 import com.example.demo.repositories.UserRepository;
@@ -31,6 +32,7 @@ public class UserService {
         Users user = new Users();
         user.setEmail_user(email);
         user.setPassword_user(PasswordUtil.hashPassword(password));
+        user.setRol(Roles.CLIENTE);
         userRepository.save(user);
     }
 

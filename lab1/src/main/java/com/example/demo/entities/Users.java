@@ -1,5 +1,6 @@
 package com.example.demo.entities;
 
+import com.example.demo.Dtos.Roles;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 public class Users {
@@ -7,14 +8,14 @@ public class Users {
     private String nombre_user;
     private String email_user;
     private String password_user;
-    private String rol;
+    private Roles rol;
 
     // Getters
     public Long getId_user() { return id_user; }
     public String getNombre_user() { return nombre_user; }
     public String getEmail_user() { return email_user; }
     public String getPassword_user() { return password_user; }
-    public String getRol() { return rol; }
+    public Roles getRol() { return rol; }
 
     //Setters
     public void setId_user(Long id_user) {
@@ -29,7 +30,7 @@ public class Users {
     public void setPassword_user(String password_user) {
         this.password_user = password_user;
     }
-    public void setRol(String rol) {
+    public void setRol(Roles rol) {
         this.rol = rol;
     }
 }
