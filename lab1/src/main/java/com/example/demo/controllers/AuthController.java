@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import com.example.demo.Dtos.AuthRequest;
 import com.example.demo.Dtos.AuthResponse;
+import com.example.demo.Dtos.Roles;
 import com.example.demo.config.Jwt.JwtUtil;
 import com.example.demo.config.PasswordUtil;
 import com.example.demo.entities.Users;
@@ -54,10 +55,11 @@ public class AuthController {
     public ResponseEntity<?> register(@RequestBody AuthRequest request) {
         String email = request.getEmail();
         String password = request.getPassword();
+        Roles rol = request.getRol();
         Optional<Users> user = userRepository.findByEmail(email);
 
         if(user.isEmpty()){
-            userService.createUser(email, password);
+            userService.createUser(email, password, rol);
             return ResponseEntity.status(HttpStatus.CREATED).body("Usuario registrado correctamente. Ahora debe iniciar sesión.");
         }
         else {
