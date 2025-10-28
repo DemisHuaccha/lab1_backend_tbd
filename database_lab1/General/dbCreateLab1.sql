@@ -44,3 +44,18 @@ CREATE TABLE Transacciones(
 	CONSTRAINT fk_storeDestino_transaccion FOREIGN KEY (id_storeDE) REFERENCES Stores(id_store),
     CONSTRAINT fk_product_transaccion FOREIGN KEY (id_product) REFERENCES Products(id_product)
 );
+
+CREATE TABLE Supplier(
+	supplier_id SERIAL PRIMARY KEY,
+	supplier_name VARCHAR(255)
+);
+
+CREATE TABLE Supplier_Product(
+	supplier_idP BIGINT NOT NULL,
+	product_idP BIGINT NOT NULL,
+	quantity INTEGER,
+	unit_purchase_price INTEGER,
+	PRIMARY KEY (supplier_idP, product_idP),
+	CONSTRAINT fk_supplier_product FOREIGN KEY (supplier_idP) REFERENCES Supplier(supplier_id),
+    CONSTRAINT fk_product_supplier FOREIGN KEY (product_idP) REFERENCES Products(id_product)
+);
