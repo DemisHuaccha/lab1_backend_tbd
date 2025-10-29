@@ -1,4 +1,4 @@
-CREATE TABLE Products(
+CREATE TABLE IF NOT EXISTS Products(
 	id_product SERIAL PRIMARY KEY,
 	nombre_product VARCHAR(255),
 	descripcion_product VARCHAR(255),
@@ -6,14 +6,14 @@ CREATE TABLE Products(
 	SKU VARCHAR(255) UNIQUE NOT NULL
 );
 
-CREATE TABLE Stores(
+CREATE TABLE IF NOT EXISTS Stores(
 	id_store SERIAL PRIMARY KEY,
 	nombre_store VARCHAR(255),
 	direccion_store VARCHAR(255),
 	ciudad_store VARCHAR(255)
 );
 
-CREATE TABLE Users(
+CREATE TABLE IF NOT EXISTS Users(
     id_user SERIAL PRIMARY KEY,
 	nombre_user VARCHAR(255),
 	email_user VARCHAR(255) UNIQUE NOT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE Users(
 	CONSTRAINT fk_tienda_user FOREIGN KEY (id_storeU) REFERENCES Stores(id_store)
 );
 
-CREATE TABLE Inventario(
+CREATE TABLE IF NOT EXISTS Inventario(
     id_storeIn BIGINT NOT NULL,
     id_productIn BIGINT NOT NULL,
     stock_inventario INTEGER,
@@ -32,7 +32,7 @@ CREATE TABLE Inventario(
     CONSTRAINT fk_product_inventario  FOREIGN KEY (id_productIn) REFERENCES Products(id_product)
 );
 
-CREATE TABLE Transacciones(
+CREATE TABLE IF NOT EXISTS Transacciones(
 	id_transaccion SERIAL,
 	tipo_transaccion VARCHAR(255),
 	fecha_transaccion DATE,
@@ -45,12 +45,12 @@ CREATE TABLE Transacciones(
     CONSTRAINT fk_product_transaccion FOREIGN KEY (id_product) REFERENCES Products(id_product)
 );
 
-CREATE TABLE Supplier(
+CREATE TABLE IF NOT EXISTS Supplier(
 	supplier_id SERIAL PRIMARY KEY,
 	supplier_name VARCHAR(255)
 );
 
-CREATE TABLE Supplier_Product(
+CREATE TABLE IF NOT EXISTS Supplier_Product(
 	supplier_idP BIGINT NOT NULL,
 	product_idP BIGINT NOT NULL,
 	quantity INTEGER,
@@ -58,4 +58,5 @@ CREATE TABLE Supplier_Product(
 	PRIMARY KEY (supplier_idP, product_idP),
 	CONSTRAINT fk_supplier_product FOREIGN KEY (supplier_idP) REFERENCES Supplier(supplier_id),
     CONSTRAINT fk_product_supplier FOREIGN KEY (product_idP) REFERENCES Products(id_product)
+
 );
