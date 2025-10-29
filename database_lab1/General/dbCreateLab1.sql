@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS Users(
 	CONSTRAINT fk_store_user FOREIGN KEY (id_storeU) REFERENCES Stores(id_store)
 );
 
-CREATE TABLE IF NOT EXISTS Inventario(
+CREATE TABLE IF NOT EXISTS Inventory(
     id_storeIn BIGINT NOT NULL,
     id_productIn BIGINT NOT NULL,
     stock_inventory INTEGER,
@@ -32,10 +32,14 @@ CREATE TABLE IF NOT EXISTS Inventario(
     CONSTRAINT fk_product_inventory  FOREIGN KEY (id_productIn) REFERENCES Products(id_product)
 );
 
+/*
+Transactions Types: 
+'Sale', 'Transfer', 'Receipt'
+*/
 CREATE TABLE IF NOT EXISTS Transactions(
 	id_transaction SERIAL,
-	tipo_transaction VARCHAR(255),
-	fecha_transaction DATE,
+	type_transaction VARCHAR(255),
+	date_transaction DATE,
 	amount_product INTEGER,
 	id_product BIGINT,
 	id_storeOR BIGINT,
@@ -58,5 +62,5 @@ CREATE TABLE IF NOT EXISTS Supplier_Product(
 	PRIMARY KEY (supplier_idP, product_idP),
 	CONSTRAINT fk_supplier_product FOREIGN KEY (supplier_idP) REFERENCES Supplier(supplier_id),
     CONSTRAINT fk_product_supplier FOREIGN KEY (product_idP) REFERENCES Products(id_product)
-
 );
+
