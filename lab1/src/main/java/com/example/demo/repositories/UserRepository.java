@@ -19,13 +19,13 @@ public class UserRepository {
     private final RowMapper<Users> rowMapper = (rs, rowNum) -> {
         Users user = new Users();
         user.setId_user(rs.getLong("id_user"));
-        user.setNombre_user(rs.getString("nombre_user"));
+        user.setName_user(rs.getString("name_user"));
         user.setEmail_user(rs.getString("email_user"));
         user.setPassword_user(rs.getString("password_user"));
 
-        String rolStr = rs.getString("rol");
-        Roles rol = Roles.valueOf(rolStr.toUpperCase());
-        user.setRol(rol);
+        String roleStr = rs.getString("role");
+        Roles role = Roles.valueOf(roleStr.toUpperCase());
+        user.setRole(role);
 
         return user;
     };
@@ -51,13 +51,13 @@ public class UserRepository {
     }
 
     public int save(Users user) {
-        String sql = "INSERT INTO users (nombre_user, email_user, password_user, rol) VALUES (?, ?, ?, ?)";
-        return jdbcTemplate.update(sql, user.getNombre_user(), user.getEmail_user(), user.getPassword_user(), user.getRol().name());
+        String sql = "INSERT INTO users (name_user, email_user, password_user, role) VALUES (?, ?, ?, ?)";
+        return jdbcTemplate.update(sql, user.getName_user(), user.getEmail_user(), user.getPassword_user(), user.getRole().name());
     }
 
     public int update(Users user) {
-        String sql = "UPDATE users SET nombre_user = ?, email_user = ?, password_user = ?, rol = ? WHERE id_user = ?";
-        return jdbcTemplate.update(sql, user.getNombre_user(), user.getEmail_user(), user.getPassword_user(), user.getRol().name(), user.getId_user());
+        String sql = "UPDATE users SET name_user = ?, email_user = ?, password_user = ?, role = ? WHERE id_user = ?";
+        return jdbcTemplate.update(sql, user.getName_user(), user.getEmail_user(), user.getPassword_user(), user.getRole().name(), user.getId_user());
     }
 
     public int delete(Long id) {

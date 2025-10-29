@@ -20,8 +20,8 @@ public class StoreController {
     @GetMapping
     public List<Stores> getStores(){ return storeService.getAll(); }
 
-    @GetMapping("/{ciudad}")
-    public List<Stores> getStoresByCity(@PathVariable String ciudad){ return storeService.getByCity(ciudad); }
+    @GetMapping("/{city}")
+    public List<Stores> getStoresByCity(@PathVariable String city){ return storeService.getByCity(city); }
 
     @GetMapping("/{id}")
     public Stores getStoreById(@PathVariable Long id){ return storeService.getById(id); }
@@ -29,8 +29,8 @@ public class StoreController {
     @GetMapping("/{name}")
     public Stores getStoreByName(@PathVariable String name){ return storeService.getByName(name); }
 
-    @GetMapping("/{direccion}")
-    public Stores getStoreByDirection(@PathVariable String direccion){ return storeService.getByDirection(direccion);}
+    @GetMapping("/{address}")
+    public Stores getStoreByAddress(@PathVariable String address){ return storeService.getByAddress(address);}
 
     // Create
 

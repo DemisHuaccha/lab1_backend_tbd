@@ -35,16 +35,16 @@ public class ProductService {
         if (productRepository.findBySKU(product.getSKU()).isPresent()) {
             throw new RuntimeException("El SKU ya existe: " + product.getSKU());
         }
-        
+
         // Validar datos requeridos
-        if (product.getNombre_product() == null || product.getNombre_product().trim().isEmpty()) {
+        if (product.getName_product() == null || product.getName_product().trim().isEmpty()) {
             throw new RuntimeException("El nombre del producto es requerido");
         }
-        
+
         if (product.getPrice() == null || product.getPrice() <= 0) {
             throw new RuntimeException("El precio debe ser mayor a 0");
         }
-        
+
         if (product.getSKU() == null || product.getSKU().trim().isEmpty()) {
             throw new RuntimeException("El SKU es requerido");
         }
@@ -68,14 +68,14 @@ public class ProductService {
         }
 
         // Validar datos requeridos
-        if (product.getNombre_product() == null || product.getNombre_product().trim().isEmpty()) {
+        if (product.getName_product() == null || product.getName_product().trim().isEmpty()) {
             throw new RuntimeException("El nombre del producto es requerido");
         }
-        
+
         if (product.getPrice() == null || product.getPrice() <= 0) {
             throw new RuntimeException("El precio debe ser mayor a 0");
         }
-        
+
         if (product.getSKU() == null || product.getSKU().trim().isEmpty()) {
             throw new RuntimeException("El SKU es requerido");
         }
@@ -89,7 +89,7 @@ public class ProductService {
         if (existingProduct == null) {
             throw new RuntimeException("Producto no encontrado con ID: " + id);
         }
-        
+
         productRepository.delete(id);
     }
 

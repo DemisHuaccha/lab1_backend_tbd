@@ -16,10 +16,10 @@ public class StoreService {
     //Finders
 
     public List<Stores> getAll() {return storeRepository.findAll();}
-    public List<Stores> getByCity(String ciudad) {return storeRepository.findByCity(ciudad);}
+    public List<Stores> getByCity(String city) {return storeRepository.findByCity(city);}
     public Stores getById(Long id) {return storeRepository.findById(id);}
     public Stores getByName(String name) {return storeRepository.findByName(name);}
-    public Stores getByDirection(String direccion) {return storeRepository.findByDirection(direccion);}
+    public Stores getByAddress(String address) {return storeRepository.findByAddress(address);}
 
     // Create
 

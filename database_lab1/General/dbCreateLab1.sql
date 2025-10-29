@@ -1,48 +1,48 @@
 CREATE TABLE IF NOT EXISTS Products(
 	id_product SERIAL PRIMARY KEY,
-	nombre_product VARCHAR(255),
-	descripcion_product VARCHAR(255),
+	name_product VARCHAR(255),
+	description_product VARCHAR(255),
 	price INTEGER,
 	SKU VARCHAR(255) UNIQUE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Stores(
 	id_store SERIAL PRIMARY KEY,
-	nombre_store VARCHAR(255),
-	direccion_store VARCHAR(255),
-	ciudad_store VARCHAR(255)
+	name_store VARCHAR(255),
+	direction_store VARCHAR(255),
+	city_store VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS Users(
     id_user SERIAL PRIMARY KEY,
-	nombre_user VARCHAR(255),
+	name_user VARCHAR(255),
 	email_user VARCHAR(255) UNIQUE NOT NULL,
 	password_user VARCHAR(255) NOT NULL,
-	rol VARCHAR(255),
+	role VARCHAR(255),
 	id_storeU BIGINT,
-	CONSTRAINT fk_tienda_user FOREIGN KEY (id_storeU) REFERENCES Stores(id_store)
+	CONSTRAINT fk_store_user FOREIGN KEY (id_storeU) REFERENCES Stores(id_store)
 );
 
 CREATE TABLE IF NOT EXISTS Inventario(
     id_storeIn BIGINT NOT NULL,
     id_productIn BIGINT NOT NULL,
-    stock_inventario INTEGER,
+    stock_inventory INTEGER,
     PRIMARY KEY (id_storeIn, id_productIn),
-    CONSTRAINT fk_store_inventario FOREIGN KEY (id_storeIn) REFERENCES Stores(id_store),
-    CONSTRAINT fk_product_inventario  FOREIGN KEY (id_productIn) REFERENCES Products(id_product)
+    CONSTRAINT fk_store_inventory FOREIGN KEY (id_storeIn) REFERENCES Stores(id_store),
+    CONSTRAINT fk_product_inventory  FOREIGN KEY (id_productIn) REFERENCES Products(id_product)
 );
 
-CREATE TABLE IF NOT EXISTS Transacciones(
-	id_transaccion SERIAL,
-	tipo_transaccion VARCHAR(255),
-	fecha_transaccion DATE,
-	cantidad_product INTEGER,
+CREATE TABLE IF NOT EXISTS Transactions(
+	id_transaction SERIAL,
+	tipo_transaction VARCHAR(255),
+	fecha_transaction DATE,
+	amount_product INTEGER,
 	id_product BIGINT,
 	id_storeOR BIGINT,
 	id_storeDE BIGINT,
-	CONSTRAINT fk_storeOrigen_transaccion FOREIGN KEY (id_storeOR) REFERENCES Stores(id_store),
-	CONSTRAINT fk_storeDestino_transaccion FOREIGN KEY (id_storeDE) REFERENCES Stores(id_store),
-    CONSTRAINT fk_product_transaccion FOREIGN KEY (id_product) REFERENCES Products(id_product)
+	CONSTRAINT fk_storeOrigin_transaction FOREIGN KEY (id_storeOR) REFERENCES Stores(id_store),
+	CONSTRAINT fk_storeDestiny_transaction FOREIGN KEY (id_storeDE) REFERENCES Stores(id_store),
+    CONSTRAINT fk_product_transaction FOREIGN KEY (id_product) REFERENCES Products(id_product)
 );
 
 CREATE TABLE IF NOT EXISTS Supplier(

@@ -44,7 +44,7 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no encontrado");
         }
         else if (PasswordUtil.verifyPassword(password, user.get().getPassword_user())) {
-            String token = jwtUtil.generateToken(email, user.get().getRol());
+            String token = jwtUtil.generateToken(email, user.get().getRole());
             return ResponseEntity.ok(Map.of("token", token));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
@@ -55,11 +55,11 @@ public class AuthController {
     public ResponseEntity<?> register(@RequestBody AuthRequest request) {
         String email = request.getEmail();
         String password = request.getPassword();
-        Roles rol = request.getRol();
+        Roles role = request.getRole();
         Optional<Users> user = userRepository.findByEmail(email);
 
         if(user.isEmpty()){
-            userService.createUser(email, password, rol);
+            userService.createUser(email, password, role);
             return ResponseEntity.status(HttpStatus.CREATED).body("Usuario registrado correctamente. Ahora debe iniciar sesión.");
         }
         else {

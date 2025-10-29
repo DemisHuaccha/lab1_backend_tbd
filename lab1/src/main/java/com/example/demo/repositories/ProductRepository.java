@@ -18,8 +18,8 @@ public class ProductRepository {
     private final RowMapper<Products> rowMapper = (rs, rowNum) -> {
         Products product = new Products();
         product.setId(rs.getLong("id_product"));
-        product.setNombre_product(rs.getString("nombre_product"));
-        product.setDescripcion_product(rs.getString("descripcion_product"));
+        product.setName_product(rs.getString("name_product"));
+        product.setDescription_product(rs.getString("description_product"));
         product.setPrice(rs.getInt("price"));
         product.setSKU(rs.getString("sku"));
         return product;
@@ -46,22 +46,22 @@ public class ProductRepository {
     }
 
     public int save(Products product) {
-        String sql = "INSERT INTO products (nombre_product, descripcion_product, price, sku) VALUES (?, ?, ?, ?)";
-        return jdbcTemplate.update(sql, 
-            product.getNombre_product(), 
-            product.getDescripcion_product(), 
-            product.getPrice(), 
-            product.getSKU());
+        String sql = "INSERT INTO products (name_product, description_product, price, sku) VALUES (?, ?, ?, ?)";
+        return jdbcTemplate.update(sql,
+                product.getName_product(),
+                product.getDescription_product(),
+                product.getPrice(),
+                product.getSKU());
     }
 
     public int update(Products product) {
-        String sql = "UPDATE products SET nombre_product = ?, descripcion_product = ?, price = ?, sku = ? WHERE id_product = ?";
-        return jdbcTemplate.update(sql, 
-            product.getNombre_product(), 
-            product.getDescripcion_product(), 
-            product.getPrice(), 
-            product.getSKU(), 
-            product.getId());
+        String sql = "UPDATE products SET nombre_product = ?, descripcion_product = ?, price = ?, sku = ? WHERE id = ?";
+        return jdbcTemplate.update(sql,
+                product.getName_product(),
+                product.getDescription_product(),
+                product.getPrice(),
+                product.getSKU(),
+                product.getId());
     }
 
     public int delete(Long id) {
@@ -70,7 +70,7 @@ public class ProductRepository {
     }
 
     public List<Products> findByNameContaining(String name) {
-        String sql = "SELECT * FROM products WHERE nombre_product ILIKE ?";
+        String sql = "SELECT * FROM products WHERE name_product ILIKE ?";
         return jdbcTemplate.query(sql, rowMapper, "%" + name + "%");
     }
 }
