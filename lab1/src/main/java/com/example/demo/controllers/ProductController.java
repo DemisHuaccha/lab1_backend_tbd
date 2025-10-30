@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.Dtos.ninetyDays;
 import com.example.demo.entities.Products;
 import com.example.demo.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,8 +72,8 @@ public class ProductController {
         return ResponseEntity.ok(exists);
     }
     @GetMapping("/NoMovements")
-    public ResponseEntity<List<Products>> productsWithNoMovementsIn90Days() {
-        List<Products> products = productService.getAllProducts();
+    public ResponseEntity<List<ninetyDays>> productsWithNoMovementsIn90Days() {
+        List<ninetyDays> products = productService.productsWithNoMovementsIn90Days();
         return ResponseEntity.ok(products);
     }
 }

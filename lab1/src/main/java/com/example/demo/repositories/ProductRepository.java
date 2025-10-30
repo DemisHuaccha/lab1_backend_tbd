@@ -1,5 +1,6 @@
 package com.example.demo.repositories;
 
+import com.example.demo.Dtos.ninetyDays;
 import com.example.demo.entities.Products;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -75,16 +76,28 @@ public class ProductRepository {
     }
 
     //consulta 8 productos sin movimientos por mas de 90 dias
-    public List<Products> ProductsWithNoMovement() {
-        String sql = "SELECT \n" +
-                "    p.nombre AS nombre_producto,\n" +
-                "    SUM(i.cantidad_en_stock) AS stock_actual,\n" +
-                "    MAX(t.fecha) AS ultima_transaccion\n" +
-                "FROM productos p\n" +
-                "JOIN inventario i ON p.id = i.id_producto\n" +
-                "LEFT JOIN transacciones t ON p.id = t.id_producto\n" +
-                "GROUP BY p.id, p.nombre\n" +
-                "HAVING MAX(t.fecha) IS NULL OR MAX(t.fecha) < CURRENT_DATE - INTERVAL '90 days';\n";
-        return  jdbcTemplate.query(sql, rowMapper);
+    public List<ninetyDays> ProductsWithNoMovement() {
+        String sql = """
+        SELECT
+            p.name_product AS product_name,
+            s.name_store AS store_name,
+            i.stock_inventory AS stock,
+            MAX(t.date_transaction) AS las_date
+                        FROM products p
+                    LEFT JOIN inventory i ON p.id_product = i.id_productIn
+                    LEFT JOIN transactions t ON p.id_product = t.id_product
+    				LEFT JOIN stores s ON s.id_store = i.id_storein
+                    GROUP BY p.id_product, p.name_product, p.sku, s.id_store,i.stock_inventory
+                    HAVING MAX(t.date_transaction) IS NULL OR MAX(t.date_transaction) < CURRENT_DATE - INTERVAL '5 days'""";
+
+        RowMapper<ninetyDays> rowMapper = (rs, rowNum) -> new ninetyDays(
+                rs.getString("product_name"),
+                rs.getString("store_name"),
+                rs.getInt("stock"),
+                rs.getDate("las_date")
+        );
+
+        return jdbcTemplate.query(sql, rowMapper);
     }
+
 }

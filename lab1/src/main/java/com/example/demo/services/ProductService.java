@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import com.example.demo.Dtos.ninetyDays;
 import com.example.demo.entities.Products;
 import com.example.demo.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,7 +103,7 @@ public class ProductService {
             return false;
         }
     }
-    public List<Products> productsWithNoMovementsIn90Days() {
+    public List<ninetyDays> productsWithNoMovementsIn90Days() {
         return productRepository.ProductsWithNoMovement();
     }
 }
