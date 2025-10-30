@@ -20,7 +20,7 @@ public class JwtUtil {
     @Value("${jwt.expiration}")
     private long expiration;
 
-    public String generateToken(String email,  Roles rol, Integer storeU_id) {
+    public String generateToken(String email,  Roles rol, Long storeU_id) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + expiration);
 

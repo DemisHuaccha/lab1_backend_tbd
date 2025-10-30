@@ -26,6 +26,10 @@ public class UserRepository {
         String roleStr = rs.getString("role");
         Roles role = Roles.valueOf(roleStr.toUpperCase());
         user.setRole(role);
+        
+        Long storeU_id = rs.getLong("storeU_id");
+        user.setStoreU_id(storeU_id);
+
 
         return user;
     };
@@ -51,8 +55,8 @@ public class UserRepository {
     }
 
     public int save(Users user) {
-        String sql = "INSERT INTO users (name_user, email_user, password_user, role) VALUES (?, ?, ?, ?)";
-        return jdbcTemplate.update(sql, user.getName_user(), user.getEmail_user(), user.getPassword_user(), user.getRole().name());
+        String sql = "INSERT INTO users (name_user, email_user, password_user, role, storeU_id) VALUES (?, ?, ?, ?)";
+        return jdbcTemplate.update(sql, user.getName_user(), user.getEmail_user(), user.getPassword_user(), user.getRole().name(), user.getStoreU_id());
     }
 
     public int update(Users user) {
