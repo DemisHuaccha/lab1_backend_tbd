@@ -20,20 +20,21 @@ public class JwtUtil {
     @Value("${jwt.expiration}")
     private long expiration;
 
-    public String generateToken(String email,  Roles rol) {
+    public String generateToken(String email,  Roles rol, Integer storeU_id) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + expiration);
 
         return Jwts.builder()
                 .setSubject(email)
                 .claim("rol", "ROLE_" + rol.name())
+                .claim("storeU_id", storeU_id)
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
                 .signWith(Keys.hmacShaKeyFor(secret.getBytes()), SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    public String getUsernameFromToken(String token) {
+    public String getEmailFromToken(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(secret.getBytes())
                 .build()
@@ -50,6 +51,16 @@ public class JwtUtil {
                 .getBody()
                 .get("rol", String.class);
     }
+
+    public Integer getTiendaFromToken(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(secret.getBytes())
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .get("storeU_id", Integer.class);
+    }
+
 
 
     public boolean validateToken(String token) {
