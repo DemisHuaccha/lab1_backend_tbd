@@ -1,8 +1,10 @@
 package com.example.demo.controllers;
 
+import com.example.demo.Dtos.SummaryStockStore;
 import com.example.demo.entities.Stores;
 import com.example.demo.services.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,5 +49,10 @@ public class StoreController {
     @DeleteMapping("/delete/{id}")
     public int deleteStore(@PathVariable Long id){ return storeService.deleteStore(id); }
 
-
+    //consulta 10
+    @GetMapping("/summaryStockStore")
+    public ResponseEntity<List<SummaryStockStore>> summaryStockStoreTotalStores(){
+        List<SummaryStockStore> story = storeService.summaryStockStoreTotalStores();
+        return  ResponseEntity.ok(story);
+    }
 }

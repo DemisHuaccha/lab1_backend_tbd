@@ -1,5 +1,6 @@
 package com.example.demo.repositories;
 
+import com.example.demo.Dtos.SummaryStockStore;
 import com.example.demo.entities.Stores;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -70,6 +71,30 @@ public class StoreRepository {
         String sql = "DELETE FROM stores WHERE id_store = ?";
         return jdbcTemplate.update(sql, id);
     }
+
+    //consulta 10
+
+    public void refreshResumenStockTienda() {
+        String sql = "REFRESH MATERIALIZED VIEW CONCURRENTLY resumen_stock_tienda";
+        jdbcTemplate.execute(sql);
+    }
+
+
+    public List<SummaryStockStore> getResumenStockTienda() {
+        String sql = "SELECT * FROM resumen_stock_tienda";
+
+        RowMapper<SummaryStockStore> rowMapper = (rs, rowNum) -> {
+            SummaryStockStore summary = new SummaryStockStore();
+            summary.setIdTienda(rs.getLong("id_tienda"));
+            summary.setNameStore(rs.getString("nombre_tienda"));
+            summary.setTotalPriceInventory(rs.getDouble("valor_total_inventario"));
+            summary.setUniqueProduct(rs.getInt("productos_unicos"));
+            return summary;
+        };
+
+        return jdbcTemplate.query(sql, rowMapper);
+    }
+
 
 
 
