@@ -1,8 +1,9 @@
+
 WITH 
 last_quarter_sales AS (
 /* 
-.- DATE_TRUNC returns the start date of the current quarter
-.- 'quarter' divides the year into four quarters
+.- DATE_TRUNC devuelve la fecha inicial del trimestre actual
+.- quarter, devide el año en trimestres
 */
     SELECT 
         id_product,
