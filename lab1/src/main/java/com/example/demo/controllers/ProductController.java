@@ -70,4 +70,9 @@ public class ProductController {
         boolean exists = productService.productExists(id);
         return ResponseEntity.ok(exists);
     }
+    @GetMapping("/NoMovements")
+    public ResponseEntity<List<Products>> productsWithNoMovementsIn90Days() {
+        List<Products> products = productService.getAllProducts();
+        return ResponseEntity.ok(products);
+    }
 }

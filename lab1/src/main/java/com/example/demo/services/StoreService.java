@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import com.example.demo.Dtos.SummaryStockStore;
 import com.example.demo.entities.Stores;
 import com.example.demo.repositories.StoreRepository;
 import org.apache.catalina.Store;
@@ -32,4 +33,14 @@ public class StoreService {
     // Delete
 
     public int deleteStore(Long id) {return storeRepository.delete(id);}
+
+    //consulta 10
+    public List<SummaryStockStore> summaryStockStoreTotalStores(){
+        refreshResumenStockTienda();
+        return storeRepository.getResumenStockTienda();
+    }
+
+    public void refreshResumenStockTienda() {
+        storeRepository.refreshResumenStockTienda();
+    }
 }

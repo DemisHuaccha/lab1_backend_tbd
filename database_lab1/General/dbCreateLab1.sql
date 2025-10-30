@@ -64,3 +64,17 @@ CREATE TABLE IF NOT EXISTS Supplier_Product(
     CONSTRAINT fk_product_supplier FOREIGN KEY (product_idP) REFERENCES Products(id_product)
 );
 
+-- Crear la vista materializada para la consulta 10
+CREATE MATERIALIZED VIEW resumen_stock_tienda AS
+SELECT
+    t.id_store AS id_tienda,
+    t.nombre_store AS nombre_tienda,
+    SUM(i.stock_inventario * p.price) AS valor_total_inventario,
+    COUNT(DISTINCT i.id_productin) AS productos_unicos
+FROM stores t
+         JOIN inventario i ON t.id_store = i.id_storein
+         JOIN products p ON i.id_productin = p.id_product
+GROUP BY t.id_store, t.nombre_store;
+
+CREATE INDEX idx_resumen_stock_tienda ON resumen_stock_tienda (id_tienda);
+

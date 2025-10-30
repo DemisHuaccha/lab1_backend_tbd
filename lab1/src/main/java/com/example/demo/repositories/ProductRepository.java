@@ -73,4 +73,18 @@ public class ProductRepository {
         String sql = "SELECT * FROM products WHERE name_product ILIKE ?";
         return jdbcTemplate.query(sql, rowMapper, "%" + name + "%");
     }
+
+    //consulta 8 productos sin movimientos por mas de 90 dias
+    public List<Products> ProductsWithNoMovement() {
+        String sql = "SELECT \n" +
+                "    p.nombre AS nombre_producto,\n" +
+                "    SUM(i.cantidad_en_stock) AS stock_actual,\n" +
+                "    MAX(t.fecha) AS ultima_transaccion\n" +
+                "FROM productos p\n" +
+                "JOIN inventario i ON p.id = i.id_producto\n" +
+                "LEFT JOIN transacciones t ON p.id = t.id_producto\n" +
+                "GROUP BY p.id, p.nombre\n" +
+                "HAVING MAX(t.fecha) IS NULL OR MAX(t.fecha) < CURRENT_DATE - INTERVAL '90 days';\n";
+        return  jdbcTemplate.query(sql, rowMapper);
+    }
 }
