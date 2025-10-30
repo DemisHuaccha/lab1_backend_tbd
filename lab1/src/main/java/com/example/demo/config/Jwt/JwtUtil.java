@@ -52,13 +52,13 @@ public class JwtUtil {
                 .get("rol", String.class);
     }
 
-    public Integer getTiendaFromToken(String token) {
+    public Long getStoreFromToken(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(secret.getBytes())
                 .build()
                 .parseClaimsJws(token)
                 .getBody()
-                .get("storeU_id", Integer.class);
+                .get("storeU_id", Long.class);
     }
 
 
