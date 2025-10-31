@@ -20,7 +20,7 @@ public class JwtUtil {
     @Value("${jwt.expiration}")
     private long expiration;
 
-    public String generateToken(String email,  Roles rol, Long storeU_id) {
+    public String generateToken(String email,  Roles rol, Long storeU_id, String username) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + expiration);
 
@@ -28,6 +28,7 @@ public class JwtUtil {
                 .setSubject(email)
                 .claim("rol", "ROLE_" + rol.name())
                 .claim("storeU_id", storeU_id)
+                .claim("username", username)
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
                 .signWith(Keys.hmacShaKeyFor(secret.getBytes()), SignatureAlgorithm.HS256)
@@ -41,6 +42,15 @@ public class JwtUtil {
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
+    }
+
+    public String getUserNameFromToken(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(secret.getBytes())
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .get("username", String.class);
     }
 
     public String getRoleFromToken(String token) {

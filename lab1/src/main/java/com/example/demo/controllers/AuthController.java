@@ -43,7 +43,7 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no encontrado");
         }
         else if (PasswordUtil.verifyPassword(password, user.get().getPassword_user())) {
-            String token = jwtUtil.generateToken(email, user.get().getRole(), user.get().getStoreU_id());
+            String token = jwtUtil.generateToken(email, user.get().getRole(), user.get().getStoreU_id(), user.get().getName_user());
             return ResponseEntity.ok(Map.of("token", token));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
