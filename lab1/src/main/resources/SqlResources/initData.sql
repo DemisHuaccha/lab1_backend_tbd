@@ -1,3 +1,5 @@
+DO $$
+BEGIN
 -- ARCHIVO ÚNICO DE POBLAMIENTO DE DATOS SQL (TOTAL: 300 REGISTROS)
 
 -- 1. POBLAMIENTO DE LA TABLA 'Stores' (8 Registros)
@@ -11,7 +13,11 @@ INSERT INTO Stores (id_store, name_store, direction_store, city_store) VALUES
                                                                            (6, 'Tienda Iquique Playa', 'Paseo Costero 50', 'Iquique'),
 -- Nuevas tiendas para volumen
                                                                            (7, 'Tienda Playera La Serena', 'Avenida del Mar 10', 'La Serena'),
-                                                                           (8, 'Tienda Austral Temuco', 'Av. Alemania 700', 'Temuco');
+                                                                           (8, 'Tienda Austral Temuco', 'Av. Alemania 700', 'Temuco')
+                                                                            ON CONFLICT (id_store) DO NOTHING;
+
+
+
 
 -- 2. POBLAMIENTO DE LA TABLA 'Products' (15 Registros)
 -----------------------------------------------------------------
@@ -30,7 +36,8 @@ INSERT INTO Products (id_product, name_product, description_product, price, SKU)
                                                                                      (12, 'Adaptador USB-C a HDMI', 'Plug and play, 4K compatible', 15.00, 'ADAPUCHDMI'),
                                                                                      (13, 'Tablet Pro 11"', 'Pantalla Liquid Retina, 256GB', 699.00, 'TABPRO11'),
                                                                                      (14, 'Silla Gamer Ergonómica', 'Soporte lumbar ajustable', 189.99, 'SLLGMERGO'),
-                                                                                     (15, 'Toner Impresora Negro', 'Rendimiento 2500 páginas', 45.00, 'TNRB2500');
+                                                                                     (15, 'Toner Impresora Negro', 'Rendimiento 2500 páginas', 45.00, 'TNRB2500')
+    ON CONFLICT (id_product) DO NOTHING;
 
 -- 3. POBLAMIENTO DE LA TABLA 'Supplier' (6 Registros)
 -----------------------------------------------------------------
@@ -40,18 +47,20 @@ INSERT INTO Supplier (supplier_id, supplier_name) VALUES
                                                       (103, 'Global Components Chile'),
                                                       (104, 'Tecno Suministros Rápido'),
                                                       (105, 'Proveeduría Industrial Sur'),
-                                                      (106, 'Componentes Avanzados SPA');
-
+                                                      (106, 'Componentes Avanzados SPA')
+ON CONFLICT (supplier_id) DO NOTHING;
 -- 4. POBLAMIENTO DE LA TABLA 'Users' (12 Registros) - Depende de Stores
 -----------------------------------------------------------------
 -- 1 Admin (NULL Store)
 INSERT INTO Users (id_user, name_user, email_user, password_user, role, id_storeU) VALUES
-    (1001, 'Ana Gutiérrez', 'ana.gutierrez@sys.com', 'hashedpass123', 'Admin', NULL);
+    (1001, 'Ana Gutiérrez', 'ana.gutierrez@sys.com', 'hashedpass123', 'Admin', NULL)
+ON CONFLICT (id_user) DO NOTHING;
 -- Managers (T1, T4, T7)
 INSERT INTO Users (id_user, name_user, email_user, password_user, role, id_storeU) VALUES
                                                                                        (1002, 'Benjamín Soto', 'benjamin.soto@stgo.com', 'hashedpass456', 'Manager', 1),
                                                                                        (1007, 'Gloria Hernández', 'gloria.h@antofa.com', 'hashedpass999', 'Manager', 4),
-                                                                                       (1011, 'Horacio Izquierdo', 'horacio.i@serena.com', 'hashedpass111', 'Manager', 7);
+                                                                                       (1011, 'Horacio Izquierdo', 'horacio.i@serena.com', 'hashedpass111', 'Manager', 7)
+ON CONFLICT (id_user) DO NOTHING;
 -- Employees
 INSERT INTO Users (id_user, name_user, email_user, password_user, role, id_storeU) VALUES
                                                                                        (1003, 'Carla Díaz', 'carla.diaz@valpo.com', 'hashedpass789', 'Employee', 2),
@@ -61,11 +70,13 @@ INSERT INTO Users (id_user, name_user, email_user, password_user, role, id_store
                                                                                        (1008, 'Héctor Ibarra', 'hector.i@ranca.com', 'hashedpass777', 'Employee', 5),
                                                                                        (1009, 'Isabel Jaramillo', 'isabel.j@iquique.com', 'hashedpass666', 'Employee', 6),
                                                                                        (1010, 'Javier Leiva', 'javier.l@iquique.com', 'hashedpass555', 'Employee', 6),
-                                                                                       (1012, 'Karla Núñez', 'karla.n@temuco.com', 'hashedpass222', 'Employee', 8);
+                                                                                       (1012, 'Karla Núñez', 'karla.n@temuco.com', 'hashedpass222', 'Employee', 8)
+    ON CONFLICT (id_user) DO NOTHING;
 
 -- 5. POBLAMIENTO DE LA TABLA 'Supplier_Product' (90 Registros) - 15 Productos x 6 Proveedores
 -------------------------------------------------------------------------------------------------
 -- Nota: Solo se muestra una muestra. El script genera 15x6=90 registros.
+/*
 INSERT INTO Supplier_Product (supplier_idP, product_idP, quantity, unit_purchase_price) VALUES
 -- Producto 1 (Smartphone)
 (101, 1, 500, 400.00), (102, 1, 300, 410.00), (103, 1, 400, 405.00), (104, 1, 450, 415.00), (105, 1, 350, 408.00), (106, 1, 300, 403.00),
@@ -97,9 +108,10 @@ INSERT INTO Supplier_Product (supplier_idP, product_idP, quantity, unit_purchase
 (101, 14, 200, 150.00), (102, 14, 180, 155.00), (103, 14, 220, 152.00), (104, 14, 150, 158.00), (105, 14, 210, 153.00), (106, 14, 230, 151.00),
 -- Producto 15 (Toner - NUEVO)
 (101, 15, 800, 35.00), (102, 15, 700, 37.00), (103, 15, 900, 36.00), (104, 15, 600, 38.00), (105, 15, 750, 36.50), (106, 15, 850, 35.50);
-
+*/
 -- 6. POBLAMIENTO DE LA TABLA 'Inventory' (120 Registros) - 15 Productos x 8 Tiendas
 --------------------------------------------------------------------------------------
+/*
 INSERT INTO Inventory (id_storeIn, id_productIn, stock_inventory) VALUES
 -- T1 (Santiago)
 (1, 1, 450), (1, 2, 320), (1, 3, 500), (1, 4, 380), (1, 5, 210), (1, 6, 410), (1, 7, 150), (1, 8, 270), (1, 9, 300), (1, 10, 250), (1, 11, 350), (1, 12, 400), (1, 13, 280), (1, 14, 150), (1, 15, 300),
@@ -117,7 +129,7 @@ INSERT INTO Inventory (id_storeIn, id_productIn, stock_inventory) VALUES
 (7, 1, 360), (7, 2, 310), (7, 3, 430), (7, 4, 340), (7, 5, 220), (7, 6, 360), (7, 7, 160), (7, 8, 260), (7, 9, 290), (7, 10, 210), (7, 11, 370), (7, 12, 460), (7, 13, 310), (7, 14, 160), (7, 15, 330),
 -- T8 (Temuco - NUEVA)
 (8, 1, 340), (8, 2, 270), (8, 3, 410), (8, 4, 320), (8, 5, 190), (8, 6, 330), (8, 7, 140), (8, 8, 210), (8, 9, 260), (8, 10, 190), (8, 11, 310), (8, 12, 410), (8, 13, 240), (8, 14, 130), (8, 15, 390);
-
+*/
 -- 7. POBLAMIENTO DE LA TABLA 'Transactions' (88 Registros) - Flujo Consistente y Redundante
 -------------------------------------------------------------------------------------------
 -- Transacciones pre-existentes (39 registros)
@@ -141,8 +153,8 @@ INSERT INTO Transactions (id_transaction, type_transaction, date_transaction, am
                                                                                                                                       (17, 'Sale', '2025-10-26 14:15:00', 8, 3, 5, NULL), (18, 'Sale', '2025-10-26 14:30:00', 1, 10, 5, NULL),
                                                                                                                                       (39, 'Sale', '2025-10-28 14:00:00', 2, 7, 5, NULL), (19, 'Sale', '2025-10-26 15:00:00', 5, 9, 6, NULL),
                                                                                                                                       (20, 'Sale', '2025-10-26 15:15:00', 15, 12, 6, NULL), (21, 'Sale', '2025-10-26 15:30:00', 2, 6, 6, NULL),
-                                                                                                                                      (22, 'Sale', '2025-10-26 15:45:00', 4, 8, 6, NULL);
-
+                                                                                                                                      (22, 'Sale', '2025-10-26 15:45:00', 4, 8, 6, NULL)
+    ON CONFLICT (id_transaction) DO NOTHING;
 -- Transacciones ADICIONALES (49 registros - IDs 40-88)
 -- FASE 3: Recepción y Transferencia (41 Transacciones)
 INSERT INTO Transactions (id_transaction, type_transaction, date_transaction, amount_product, id_product, id_storeOR, id_storeDE) VALUES
@@ -171,8 +183,8 @@ INSERT INTO Transactions (id_transaction, type_transaction, date_transaction, am
 (74, 'Receipt', '2025-10-30 15:00:00', 90, 12, NULL, 1), (75, 'Transfer', '2025-10-30 15:30:00', 7, 13, 8, 5),
 (76, 'Receipt', '2025-10-30 16:00:00', 100, 14, NULL, 2), (77, 'Transfer', '2025-10-30 16:30:00', 6, 15, 1, 6),
 (78, 'Receipt', '2025-10-30 17:00:00', 110, 1, NULL, 3), (79, 'Transfer', '2025-10-30 17:30:00', 5, 2, 2, 7),
-(80, 'Receipt', '2025-10-30 18:00:00', 120, 3, NULL, 4);
-
+(80, 'Receipt', '2025-10-30 18:00:00', 120, 3, NULL, 4)
+ON CONFLICT (id_transaction) DO NOTHING;
 -- FASE 4: Ventas Adicionales (8 Sales)
 -- 4 Sales para T7 y 4 Sales para T8 (Mínimo de 4 ventas por tienda)
 INSERT INTO Transactions (id_transaction, type_transaction, date_transaction, amount_product, id_product, id_storeOR, id_storeDE) VALUES
@@ -183,8 +195,12 @@ INSERT INTO Transactions (id_transaction, type_transaction, date_transaction, am
                                                                                                                                       (85, 'Sale', '2025-10-31 14:00:00', 3, 4, 8, NULL),  -- T8: P4
                                                                                                                                       (86, 'Sale', '2025-10-31 14:30:00', 1, 15, 8, NULL), -- T8: P15 (Toner)
                                                                                                                                       (87, 'Sale', '2025-10-31 15:00:00', 4, 9, 8, NULL),  -- T8: P9
-                                                                                                                                      (88, 'Sale', '2025-10-31 15:30:00', 2, 11, 8, NULL); -- T8: P11
-
+                                                                                                                                      (88, 'Sale', '2025-10-31 15:30:00', 2, 11, 8, NULL) -- T8: P11
+ON CONFLICT (id_transaction) DO NOTHING;
 -- ---------------------------------------------------------------------
 -- FIN DEL ARCHIVO DE POBLAMIENTO
 -- ---------------------------------------------------------------------
+
+
+END $$ LANGUAGE plpgsql;
+

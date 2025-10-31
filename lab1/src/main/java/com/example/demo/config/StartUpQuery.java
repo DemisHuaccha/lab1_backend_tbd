@@ -35,7 +35,7 @@ public class StartUpQuery implements CommandLineRunner {
                 "SqlResources/supplier_productTable.sql",
                 "SqlResources/resumen_stock_tienda.sql",
                 "SqlResources/index_resumen_stock_tienda.sql",
-                "SqlResources/initData.sql",
+                //"SqlResources/initData.sql",
                 "SqlResources/consulta7.sql"
         );
 
