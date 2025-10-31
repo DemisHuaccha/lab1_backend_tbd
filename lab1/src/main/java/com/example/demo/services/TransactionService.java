@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.Dtos.Transfer;
+import com.example.demo.Dtos.Unusual;
 import com.example.demo.entities.Transactions;
 import com.example.demo.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class TransactionService {
     public int deleteTransaction(Long id_transaction) { return transactionRepository.delete(id_transaction); }
 
     // Others
-    public List<Transactions> unusualTransaction(){
+    public List<Unusual> unusualTransaction(){
         return transactionRepository.unusualTransactions();
     }
 

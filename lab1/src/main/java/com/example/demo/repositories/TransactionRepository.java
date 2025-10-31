@@ -1,6 +1,7 @@
 package com.example.demo.repositories;
 
 
+import com.example.demo.Dtos.Unusual;
 import com.example.demo.entities.Transactions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -65,7 +66,7 @@ public class TransactionRepository {
         return jdbcTemplate.update(sql, id);
     }
 
-    public List<Transactions> unusualTransactions() {
+    public List<Unusual> unusualTransactions() {
         String sql = "SELECT stores.name_store, amount_product , products.name_product FROM (\n" +
                 "    Select\n" +
                 "        id_storeor,\n" +
@@ -80,11 +81,16 @@ public class TransactionRepository {
                 "INNER JOIN products\n" +
                 "        ON ranked.id_product = products.id_product\n" +
                 "WHERE number_row <= 3;";
+        RowMapper<Unusual> rowMapper = (rs, rowNum) -> new Unusual(
+                rs.getString("name_store"),
+                rs.getString("name_product"),
+                rs.getInt("amount_product")
+        );
         return jdbcTemplate.query(sql, rowMapper);
     }
 
     public int transferInventory(Long id_product,Long id_store_origin, Long id_store_destiny, int quantity) {
-        String sql = "CALL transfer_inventory(?, ?, ?, ?)";
+        String sql = "CALL transferir_inventario(?, ?, ?, ?)";
         return jdbcTemplate.update(sql, id_product, id_store_origin, id_store_destiny, quantity);
     }
 }

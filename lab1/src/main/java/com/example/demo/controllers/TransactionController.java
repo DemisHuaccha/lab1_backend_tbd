@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import com.example.demo.Dtos.Transfer;
+import com.example.demo.Dtos.Unusual;
 import com.example.demo.entities.Transactions;
 import com.example.demo.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +42,8 @@ public class TransactionController {
         return ResponseEntity.ok(transactions);
     }
     @GetMapping("/unusual")
-    public ResponseEntity<List<Transactions>> getUnusualTransactions() {
-        List<Transactions> transactions = transactionService.unusualTransaction();
+    public ResponseEntity<List<Unusual>> getUnusualTransactions() {
+        List<Unusual> transactions = transactionService.unusualTransaction();
         return ResponseEntity.ok(transactions);
     }
 
