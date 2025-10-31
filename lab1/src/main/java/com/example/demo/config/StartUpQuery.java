@@ -77,7 +77,7 @@ public class StartUpQuery implements CommandLineRunner {
                 // 4. Sincronizar secuencias
                 stmt.execute("SELECT setval('products_id_product_seq', (SELECT MAX(id_product) FROM Products))");
                 stmt.execute("SELECT setval('stores_id_store_seq', (SELECT MAX(id_store) FROM Stores))");
-                stmt.execute("SELECT setval('suppliers_supplier_id_seq', (SELECT MAX(supplier_id) FROM Suppliers))");
+                stmt.execute("SELECT setval('supplier_supplier_id_seq', (SELECT MAX(supplier_id) FROM Supplier))");
                 stmt.execute("SELECT setval('transactions_id_transaction_seq', (SELECT MAX(id_transaction) FROM Transactions))");
                 stmt.execute("SELECT setval('users_id_user_seq', (SELECT MAX(id_user) FROM Users))");
                 System.out.println("Secuencias sincronizadas correctamente.");
