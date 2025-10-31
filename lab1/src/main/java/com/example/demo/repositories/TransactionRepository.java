@@ -64,4 +64,27 @@ public class TransactionRepository {
         String sql = "DELETE FROM transactions WHERE id_transaction = ?";
         return jdbcTemplate.update(sql, id);
     }
+
+    public List<Transactions> unusualTransactions() {
+        String sql = "SELECT stores.name_store, amount_product , products.name_product FROM (\n" +
+                "    Select\n" +
+                "        id_storeor,\n" +
+                "        amount_product,\n" +
+                "        id_product,\n" +
+                "        ROW_NUMBER() OVER (PARTITION BY id_storeor ORDER BY amount_product DESC) as number_row\n" +
+                "    FROM transactions\n" +
+                "    WHERE type_transaction = 'Sale')\n" +
+                "AS ranked\n" +
+                "INNER JOIN stores\n" +
+                "        ON ranked.id_storeor = stores.id_store\n" +
+                "INNER JOIN products\n" +
+                "        ON ranked.id_product = products.id_product\n" +
+                "WHERE number_row <= 3;";
+        return jdbcTemplate.query(sql, rowMapper);
+    }
+
+    public int transferInventory(Long id_product,Long id_store_origin, Long id_store_destiny, int quantity) {
+        String sql = "CALL transfer_inventory(?, ?, ?, ?)";
+        return jdbcTemplate.update(sql, id_product, id_store_origin, id_store_destiny, quantity);
+    }
 }

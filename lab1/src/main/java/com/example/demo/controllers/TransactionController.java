@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.Dtos.Transfer;
 import com.example.demo.entities.Transactions;
 import com.example.demo.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,6 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/transactions")
 public class TransactionController {
 
@@ -40,10 +40,22 @@ public class TransactionController {
         List<Transactions> transactions = transactionService.getTransactionsByDate(date);
         return ResponseEntity.ok(transactions);
     }
+    @GetMapping("/unusual")
+    public ResponseEntity<List<Transactions>> getUnusualTransactions() {
+        List<Transactions> transactions = transactionService.unusualTransaction();
+        return ResponseEntity.ok(transactions);
+    }
 
     @PostMapping
     public ResponseEntity<Integer> createTransaction(@RequestBody Transactions transaction) {
         int createdTransaction = transactionService.createTransaction(transaction);
         return ResponseEntity.ok(createdTransaction);
     }
+
+    @PutMapping("/transfer")
+    public ResponseEntity<Integer> transferInventory(@RequestBody Transfer transfer) {
+        int result = transactionService.transferInventory(transfer);
+        return ResponseEntity.ok(result);
+    }
+
 }

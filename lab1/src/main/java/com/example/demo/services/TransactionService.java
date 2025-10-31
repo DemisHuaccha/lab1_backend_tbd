@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import com.example.demo.Dtos.Transfer;
 import com.example.demo.entities.Transactions;
 import com.example.demo.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import java.util.List;
 public class TransactionService {
     @Autowired
     private TransactionRepository transactionRepository;
+    private Transfer transfer;
 
     // Finders
     public List<Transactions> getAllTransactions() { return transactionRepository.findAll(); }
@@ -27,4 +29,17 @@ public class TransactionService {
 
     // Delete
     public int deleteTransaction(Long id_transaction) { return transactionRepository.delete(id_transaction); }
+
+    // Others
+    public List<Transactions> unusualTransaction(){
+        return transactionRepository.unusualTransactions();
+    }
+
+    public int transferInventory(Transfer transfer) {
+        return transactionRepository.transferInventory(
+                transfer.getId_product(),
+                transfer.getId_store_origin(),
+                transfer.getId_store_destiny(),
+                transfer.getQuantity());
+    }
 }
