@@ -4,6 +4,7 @@ public class AuthRequest {
     private String email;
     private String password;
     private Roles role;
+    private String name_user;
 
     //Getters
     public String getEmail() {
@@ -15,6 +16,9 @@ public class AuthRequest {
     public Roles getRole() {
         return role;
     }
+    public String getName_user() {
+        return name_user;
+    }
 
     //setters
     public void setPassword(String password) {
@@ -25,5 +29,8 @@ public class AuthRequest {
     }
     public void setRol(Roles role) {
         this.role = role;
+    }
+    public void setName_user(String name_user) {
+        this.name_user = name_user;
     }
 }

@@ -28,11 +28,12 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public void createUser(String email, String password, Roles role) {
+    public void createUser(String email, String password, Roles role, String username) {
         Users user = new Users();
         user.setEmail_user(email);
         user.setPassword_user(PasswordUtil.hashPassword(password));
         user.setRole(role);
+        user.setName_user(username);
         userRepository.save(user);
     }
 

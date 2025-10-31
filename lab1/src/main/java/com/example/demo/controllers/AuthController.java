@@ -56,10 +56,11 @@ public class AuthController {
         String email = request.getEmail();
         String password = request.getPassword();
         Roles role = request.getRole();
+        String username= request.getName_user();
         Optional<Users> user = userRepository.findByEmail(email);
 
         if(user.isEmpty()){
-            userService.createUser(email, password, role);
+            userService.createUser(email, password, role, username);
             return ResponseEntity.status(HttpStatus.CREATED).body("Usuario registrado correctamente. Ahora debe iniciar sesión.");
         }
         else {
