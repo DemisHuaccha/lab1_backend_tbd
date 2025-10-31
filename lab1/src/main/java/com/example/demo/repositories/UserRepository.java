@@ -27,7 +27,7 @@ public class UserRepository {
         Roles role = Roles.valueOf(roleStr.toUpperCase());
         user.setRole(role);
 
-        Long storeU_id = rs.getLong("storeU_id");
+        Long storeU_id = rs.getLong("id_storeU");
         user.setStoreU_id(storeU_id);
 
 
