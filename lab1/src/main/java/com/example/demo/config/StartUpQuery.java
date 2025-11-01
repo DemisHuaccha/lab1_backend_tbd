@@ -80,7 +80,6 @@ public class StartUpQuery implements CommandLineRunner {
                 stmt.execute("SELECT setval('supplier_supplier_id_seq', (SELECT MAX(supplier_id) FROM Supplier))");
                 stmt.execute("SELECT setval('transactions_id_transaction_seq', (SELECT MAX(id_transaction) FROM Transactions))");
                 stmt.execute("SELECT setval('users_id_user_seq', (SELECT MAX(id_user) FROM Users))");
-                System.out.println("Secuencias sincronizadas correctamente.");
             }
 
             System.out.println("Todos los archivos SQL se ejecutaron correctamente.");
