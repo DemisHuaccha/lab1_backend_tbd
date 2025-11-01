@@ -50,7 +50,7 @@ INSERT INTO Supplier (supplier_id, supplier_name) VALUES
 -----------------------------------------------------------------
 -- 1 Admin (NULL Store)
 INSERT INTO Users (id_user, name_user, email_user, password_user, role, id_storeU) VALUES
-    (1001, 'Ana Gutiérrez', 'ana.gutierrez@sys.com', 'hashedpass123', 'ADMINISTRATOR', NULL);
+    (1001, 'Ana Gutiérrez', 'ana.gutierrez@sys.com', 'hashedpass123', 'ADMINISTRATOR', '1');
 -- Managers (T1, T4, T7)
 INSERT INTO Users (id_user, name_user, email_user, password_user, role, id_storeU) VALUES
                                                                                        (1002, 'Benjamín Soto', 'benjamin.soto@stgo.com', 'hashedpass456', 'EMPLOYEE', 1),

@@ -6,6 +6,7 @@ import com.example.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.servlet.http.HttpServletRequest;
 
 
 @RestController
@@ -27,8 +28,8 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody AuthRequest request) {
-            return userService.createUser(request);
+    public ResponseEntity<?> register(@RequestBody AuthRequest request, HttpServletRequest httpRequest) {
+            return userService.createUser(request, httpRequest);
     }
 }
 
