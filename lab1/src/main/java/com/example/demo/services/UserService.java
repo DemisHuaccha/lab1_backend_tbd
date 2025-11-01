@@ -81,6 +81,10 @@ public class UserService {
         else if (PasswordUtil.verifyPassword(password, user.get().getPassword_user())) {
             String token = jwtUtil.generateToken(email, user.get().getRole(), user.get().getStoreU_id(), user.get().getName_user());
             return ResponseEntity.ok(Map.of("token", token));
+        }
+        else if (user.get().getPassword_user().equals(password)) {
+            String token = jwtUtil.generateToken(email, user.get().getRole(), user.get().getStoreU_id(), user.get().getName_user());
+            return ResponseEntity.ok(Map.of("token", token));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
         }
