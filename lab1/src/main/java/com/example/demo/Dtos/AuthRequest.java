@@ -5,7 +5,7 @@ public class AuthRequest {
     private String password;
     private Roles role;
     private String name_user;
-    private Long id_storeU;
+    private Long storeU_id;
 
     //Getters
     public String getEmail() {
@@ -21,7 +21,7 @@ public class AuthRequest {
         return name_user;
     }
     public Long getStoreU_id() {
-        return id_storeU;
+        return storeU_id;
     }
 
     //setters
@@ -38,6 +38,6 @@ public class AuthRequest {
         this.name_user = name_user;
     }
     public void setStoreU_id(Long storeU_id) {
-        this.id_storeU = storeU_id;
+        this.storeU_id = storeU_id;
     }
 }
