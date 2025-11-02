@@ -75,8 +75,13 @@ public class UserService {
             }
 
             else if (!(userAdmin.isEmpty()) && request.getRole()== Roles.EMPLOYEE && ( userAdmin.get().getRole()== Roles.ADMINISTRATOR || userAdmin.get().getRole()== Roles.SUPERADMINISTRATOR )){
-                request.setStoreU_id(userAdmin.get().getStoreU_id());
-                return makeUser(request);
+                if (userAdmin.get().getRole()== Roles.SUPERADMINISTRATOR){
+                    return makeUser(request);
+                }
+                else{
+                    request.setStoreU_id(userAdmin.get().getStoreU_id());
+                    return makeUser(request);
+                }
             }
             else{
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No Authorization role");
