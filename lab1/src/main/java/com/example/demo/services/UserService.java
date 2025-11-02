@@ -70,20 +70,20 @@ public class UserService {
             String admin_email= jwtUtil.getEmailFromToken(token);
             Optional<Users> userAdmin = userRepository.findByEmail(admin_email);
 
-            if(!(userAdmin.isEmpty()) && request.getRole()== Roles.ADMINISTRATOR) {
+            if(!(userAdmin.isEmpty()) && request.getRole()== Roles.ADMINISTRATOR && userAdmin.get().getRole()== Roles.SUPERADMINISTRATOR) {
                 return makeUser(request);
             }
 
-            else if (!(userAdmin.isEmpty()) && request.getRole()== Roles.EMPLOYEE){
+            else if (!(userAdmin.isEmpty()) && request.getRole()== Roles.EMPLOYEE && userAdmin.get().getRole()== Roles.ADMINISTRATOR){
                 request.setStoreU_id(userAdmin.get().getStoreU_id());
                 return makeUser(request);
             }
             else{
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Admin no encontrado");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No Authorization role");
             }
         }
         else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No se recibe token");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token not received");
         }
     }
 

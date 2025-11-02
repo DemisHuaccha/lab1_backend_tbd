@@ -1,5 +1,7 @@
 package com.example.demo.controllers;
 
+import com.example.demo.Dtos.DtoC1;
+import com.example.demo.Dtos.DtoC5;
 import com.example.demo.Dtos.ninetyDays;
 import com.example.demo.entities.Products;
 import com.example.demo.services.ProductService;
@@ -73,6 +75,18 @@ public class ProductController {
     @GetMapping("/NoMovements")
     public ResponseEntity<List<ninetyDays>> productsWithNoMovementsIn90Days() {
         List<ninetyDays> products = productService.productsWithNoMovementsIn90Days();
+        return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/AverageDaysInventory")
+    public ResponseEntity<List<DtoC1>> averageDaysInventory() {
+        List<DtoC1> products = productService.lastquarter_analysis();
+        return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/AverageDaySalesPerMonth")
+    public ResponseEntity<List<DtoC5>> averageDaySalesPerMonth() {
+        List<DtoC5> products = productService.average_salesPerMonth();
         return ResponseEntity.ok(products);
     }
 }

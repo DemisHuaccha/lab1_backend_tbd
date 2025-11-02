@@ -48,14 +48,14 @@ INSERT INTO Supplier (supplier_id, supplier_name) VALUES
                                                       (106, 'Componentes Avanzados SPA');
 -- 4. POBLAMIENTO DE LA TABLA 'Users' (12 Registros) - Depende de Stores
 -----------------------------------------------------------------
--- 1 Admin (NULL Store)
+-- 1 SuperAdmin (NULL Store)
 INSERT INTO Users (id_user, name_user, email_user, password_user, role, id_storeU) VALUES
-    (1001, 'Ana Gutiérrez', 'ana.gutierrez@sys.com', 'hashedpass123', 'ADMINISTRATOR', '1');
--- Managers (T1, T4, T7)
+    (1001, 'Ana Gutiérrez', 'ana.gutierrez@sys.com', 'hashedpass123', 'SUPERADMINISTRATOR', '1');
+-- Administrator (T1, T4, T7)
 INSERT INTO Users (id_user, name_user, email_user, password_user, role, id_storeU) VALUES
-                                                                                       (1002, 'Benjamín Soto', 'benjamin.soto@stgo.com', 'hashedpass456', 'EMPLOYEE', 1),
-                                                                                       (1007, 'Gloria Hernández', 'gloria.h@antofa.com', 'hashedpass999', 'EMPLOYEE', 4),
-                                                                                       (1011, 'Horacio Izquierdo', 'horacio.i@serena.com', 'hashedpass111', 'EMPLOYEE', 7);
+                                                                                       (1002, 'Benjamín Soto', 'benjamin.soto@stgo.com', 'hashedpass456', 'ADMINISTRATOR', 1),
+                                                                                       (1007, 'Gloria Hernández', 'gloria.h@antofa.com', 'hashedpass999', 'ADMINISTRATOR', 4),
+                                                                                       (1011, 'Horacio Izquierdo', 'horacio.i@serena.com', 'hashedpass111', 'ADMINISTRATOR', 7);
 -- Employees
 INSERT INTO Users (id_user, name_user, email_user, password_user, role, id_storeU) VALUES
                                                                                        (1003, 'Carla Díaz', 'carla.diaz@valpo.com', 'hashedpass789', 'EMPLOYEE', 2),

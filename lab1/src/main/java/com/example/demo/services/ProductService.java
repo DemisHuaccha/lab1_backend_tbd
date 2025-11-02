@@ -1,5 +1,7 @@
 package com.example.demo.services;
 
+import com.example.demo.Dtos.DtoC1;
+import com.example.demo.Dtos.DtoC5;
 import com.example.demo.Dtos.ninetyDays;
 import com.example.demo.entities.Products;
 import com.example.demo.repositories.ProductRepository;
@@ -106,4 +108,15 @@ public class ProductService {
     public List<ninetyDays> productsWithNoMovementsIn90Days() {
         return productRepository.ProductsWithNoMovement();
     }
+
+    /*Consulta 1*/
+    public List<DtoC1> lastquarter_analysis(){
+        return productRepository.AverageInventoryPerQuarter();
+    }
+
+    /*Consulta 5*/
+    public List<DtoC5> average_salesPerMonth(){
+        return productRepository.AverageSalesPerMonth();
+    }
+
 }
