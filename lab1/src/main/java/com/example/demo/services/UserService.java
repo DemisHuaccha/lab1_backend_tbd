@@ -74,7 +74,7 @@ public class UserService {
                 return makeUser(request);
             }
 
-            else if (!(userAdmin.isEmpty()) && request.getRole()== Roles.EMPLOYEE && userAdmin.get().getRole()== Roles.ADMINISTRATOR){
+            else if (!(userAdmin.isEmpty()) && request.getRole()== Roles.EMPLOYEE && ( userAdmin.get().getRole()== Roles.ADMINISTRATOR || userAdmin.get().getRole()== Roles.SUPERADMINISTRATOR )){
                 request.setStoreU_id(userAdmin.get().getStoreU_id());
                 return makeUser(request);
             }
