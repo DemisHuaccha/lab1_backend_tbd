@@ -1,6 +1,8 @@
 package com.example.demo.repositories;
 
 
+import com.example.demo.Dtos.Roles;
+import com.example.demo.Dtos.TransactionsTipes;
 import com.example.demo.Dtos.Unusual;
 import com.example.demo.entities.Transactions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,10 @@ public class TransactionRepository {
     private final RowMapper<Transactions> rowMapper = (rs, rowNum) -> {
         Transactions transaction = new Transactions();
         transaction.setId_transaction(rs.getLong("id_transaction"));
-        transaction.setType_transaction(rs.getString("type_transaction"));
+        String typeStr = rs.getString("type_transaction");
+        TransactionsTipes type = TransactionsTipes.valueOf(typeStr);
+        transaction.setType_transaction(type);
+
         transaction.setDate_transaction(rs.getDate("date_transaction"));
         transaction.setAmount_product(rs.getInt("amount_product"));
         return transaction;
