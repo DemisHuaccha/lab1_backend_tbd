@@ -167,7 +167,8 @@ Products (1) ──────< (N) Inventory
 **Función:** `update_inventory_after_transaction()`
 
 **Propósito:**
-Actualiza automáticamente el inventario cuando se inserta una nueva transacción de tipo 'Sale' o 'Receipt'. Este trigger garantiza la consistencia de datos al mantener el stock sincronizado con las transacciones.
+Actualiza automáticamente el inventario cuando se inserta una nueva transacción de tipo 'Sale' o 'Receipt'.
+Este trigger garantiza la consistencia de datos al mantener el stock sincronizado con las transacciones.
 
 **Funcionamiento:**
 
@@ -204,7 +205,8 @@ Actualiza automáticamente el inventario cuando se inserta una nueva transacció
 - `p_quantity` (INTEGER): Cantidad de productos a transferir
 
 **Propósito:**
-Procedimiento almacenado que gestiona la transferencia de inventario entre tiendas de forma transaccional, garantizando la integridad de los datos y registrando la operación.
+Procedimiento almacenado que gestiona la transferencia de inventario entre tiendas de forma transaccional,
+garantizando la integridad de los datos y registrando la operación.
 
 **Funcionamiento:**
 
@@ -221,9 +223,7 @@ Procedimiento almacenado que gestiona la transferencia de inventario entre tiend
    - Inserta un registro en la tabla `Transactions` con tipo 'Transfer'
    - Registra la fecha actual automáticamente
 
-**Ventajas:**
-- Operación atómica: si alguna parte falla, toda la operación se revierte
-- Validaciones integradas en la base de datos
+**Características:**
 - Registro automático de la transacción
 
 **Manejo de Errores:**
@@ -245,19 +245,6 @@ Almacena un resumen pre-calculado del valor total del inventario y la cantidad d
 - `nombre_tienda` (VARCHAR(255)): Nombre de la tienda
 - `valor_total_inventario` (NUMERIC): Suma del valor total del inventario (stock × precio) para todos los productos de la tienda
 - `productos_unicos` (INTEGER): Cantidad de productos diferentes en la tienda
-
-**Query Base:**
-```sql
-SELECT
-    t.id_store AS id_tienda,
-    t.name_store AS nombre_tienda,
-    SUM(i.stock_inventory * p.price) AS valor_total_inventario,
-    COUNT(DISTINCT i.id_productin) AS productos_unicos
-FROM stores t
-JOIN inventory i ON t.id_store = i.id_storein
-JOIN products p ON i.id_productin = p.id_product
-GROUP BY t.id_store, t.name_store
-```
 
 **Ventajas:**
 - **Rendimiento:** Evita recalcular agregaciones costosas en cada consulta
