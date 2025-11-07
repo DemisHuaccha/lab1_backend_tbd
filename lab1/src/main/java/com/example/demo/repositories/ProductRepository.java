@@ -90,7 +90,7 @@ public class ProductRepository {
                     LEFT JOIN transactions t ON p.id_product = t.id_product
     				LEFT JOIN stores s ON s.id_store = i.id_storein
                     GROUP BY p.id_product, p.name_product, p.sku, s.id_store,i.stock_inventory
-                    HAVING MAX(t.date_transaction) IS NULL OR MAX(t.date_transaction) < CURRENT_DATE - INTERVAL '5 days'""";
+                    HAVING MAX(t.date_transaction) IS NULL OR MAX(t.date_transaction) < CURRENT_DATE - INTERVAL '90 days'""";
 
         RowMapper<ninetyDays> rowMapper = (rs, rowNum) -> new ninetyDays(
                 rs.getString("product_name"),
