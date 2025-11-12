@@ -21,8 +21,8 @@ WITH Sales_Last_Month AS (
       AND date_transaction < date_trunc('month', NOW())
 )
 SELECT
-    s.supplier_name AS "Nombre Proveedor",
-    SUM(slm.amount_product) AS "Total Productos Vendidos"
+    s.supplier_name AS "name_supplier",
+    SUM(slm.amount_product) AS "total_products_sold_last_month"
 FROM
     Sales_Last_Month slm
         JOIN
@@ -32,5 +32,5 @@ FROM
 GROUP BY
     s.supplier_id, s.supplier_name
 ORDER BY
-    "Total Productos Vendidos" DESC
+    "total_products_sold_last_month" DESC
     LIMIT 1;

@@ -1,8 +1,6 @@
 package com.example.demo.controllers;
 
-import com.example.demo.Dtos.DtoC1;
-import com.example.demo.Dtos.DtoC5;
-import com.example.demo.Dtos.ninetyDays;
+import com.example.demo.Dtos.*;
 import com.example.demo.entities.Products;
 import com.example.demo.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +74,24 @@ public class ProductController {
     public ResponseEntity<List<ninetyDays>> productsWithNoMovementsIn90Days() {
         List<ninetyDays> products = productService.productsWithNoMovementsIn90Days();
         return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/LowStock")
+    public ResponseEntity<List<LowStock>> getLowStock() {
+        List<LowStock> products = productService.totalStockLowerThan50();
+        return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/Top5")
+    public ResponseEntity<List<Top5>> getTop5Products() {
+        List<Top5> products = productService.top5ProductsSalesPerStore();
+        return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/BestSupplierLastMonth")
+    public ResponseEntity<BestSupplierLastMonth> getBestSupplierLastMonth() {
+        BestSupplierLastMonth bestSupplierLastMonth = productService.bestSupplierLastMonth();
+        return ResponseEntity.ok(bestSupplierLastMonth);
     }
 
     @GetMapping("/AverageDaysInventory")

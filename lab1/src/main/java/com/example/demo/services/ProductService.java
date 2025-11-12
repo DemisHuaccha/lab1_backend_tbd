@@ -1,8 +1,6 @@
 package com.example.demo.services;
 
-import com.example.demo.Dtos.DtoC1;
-import com.example.demo.Dtos.DtoC5;
-import com.example.demo.Dtos.ninetyDays;
+import com.example.demo.Dtos.*;
 import com.example.demo.entities.Products;
 import com.example.demo.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,10 +107,19 @@ public class ProductService {
         return productRepository.ProductsWithNoMovement();
     }
 
+    /*Consulta 2*/
+    public List<LowStock> totalStockLowerThan50() {return productRepository.TotalStockLowerThan50();}
+
+    /*Consulta 3*/
+    public List<Top5> top5ProductsSalesPerStore() {return productRepository.Top5GlobalProducts();}
+
     /*Consulta 1*/
     public List<DtoC1> lastquarter_analysis(){
         return productRepository.AverageInventoryPerQuarter();
     }
+
+    /*Consulta 9*/
+    public BestSupplierLastMonth bestSupplierLastMonth() {return productRepository.SupplierLastMonth();}
 
     /*Consulta 5*/
     public List<DtoC5> average_salesPerMonth(){

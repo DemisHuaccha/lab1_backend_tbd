@@ -21,15 +21,15 @@ FROM Stores s
 
 -- 3. Se une la rejilla con las ventas reales
 SELECT
-    p.name_product AS "Producto (Top 5)",
-    g.name_store AS "Tienda",
+    p.name_product AS "top_5_product",
+    g.name_store AS "name_store",
     COALESCE((
                  SELECT SUM(t.amount_product)
                  FROM Transactions t
                  WHERE t.type_transaction = 'Sale'
                    AND t.id_product = g.id_product
                    AND t.id_storeOR = g.id_store
-             ), 0) AS "Cantidad Vendida"
+             ), 0) AS "quantity_sold"
 FROM
     CTE_Grid g
         JOIN

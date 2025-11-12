@@ -1,8 +1,6 @@
 package com.example.demo.repositories;
 
-import com.example.demo.Dtos.DtoC1;
-import com.example.demo.Dtos.DtoC5;
-import com.example.demo.Dtos.ninetyDays;
+import com.example.demo.Dtos.*;
 import com.example.demo.entities.Products;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -102,6 +100,77 @@ public class ProductRepository {
         return jdbcTemplate.query(sql, rowMapper);
     }
 
+    //consulta 2: productos con stock total < 50
+
+    public List<LowStock> TotalStockLowerThan50() {
+        String sql = """
+                WITH  
+                StockTotalPorProducto AS (       
+                    SELECT
+                        id_productIn,
+                        SUM(stock_inventory) AS stock_total
+                    FROM    Inventory
+                    GROUP BY  id_productIn)
+                SELECT
+                    p.name_product,
+                    st.stock_total
+                FROM    StockTotalPorProducto st
+                JOIN    Products p 
+                    ON st.id_productIn = p.id_product
+                WHERE   st.stock_total < 50; 
+        """;
+        RowMapper<LowStock> rowMapper = (rs, rowNum) -> new LowStock(
+                rs.getString("name_product"),
+                rs.getInt("stock_total")
+        );
+        return jdbcTemplate.query(sql, rowMapper);
+    }
+
+    //consulta 3: comparación de ventas de productos top 5 entre tiendas
+
+    public List<Top5> Top5GlobalProducts(){
+        String sql = """
+                WITH CTE_Top5_Products AS (
+                    SELECT id_product, SUM(amount_product) AS global_total_sold
+                    FROM Transactions
+                    WHERE type_transaction = 'Sale'
+                    GROUP BY id_product
+                    ORDER BY global_total_sold DESC
+                    LIMIT 5
+                    ),
+                
+                    CTE_Grid AS (
+                SELECT s.id_store, s.name_store, p.id_product, p.global_total_sold
+                FROM Stores s
+                    CROSS JOIN CTE_Top5_Products p 
+                    )
+                
+                SELECT
+                    p.name_product AS "top_5_product",
+                    g.name_store AS "name_store",
+                    COALESCE((
+                                 SELECT SUM(t.amount_product)
+                                 FROM Transactions t
+                                 WHERE t.type_transaction = 'Sale'
+                                   AND t.id_product = g.id_product
+                                   AND t.id_storeOR = g.id_store
+                             ), 0) AS "quantity_sold"
+                FROM
+                    CTE_Grid g
+                        JOIN
+                    Products p ON g.id_product = p.id_product
+                ORDER BY
+                    g.global_total_sold DESC, 
+                    g.name_store; 
+        """;
+        RowMapper<Top5> rowMapper = (rs, rowNum) -> new Top5(
+                rs.getString("top_5_product"),
+                rs.getString("name_store"),
+                rs.getInt("quantity_sold")
+        );
+        return jdbcTemplate.query(sql, rowMapper);
+    }
+
     //consulta 1: dias inventario promedio en el ultimo trimestre
 
     public List<DtoC1> AverageInventoryPerQuarter() {
@@ -167,8 +236,49 @@ public class ProductRepository {
         return jdbcTemplate.query(sql, rowMapper);
     }
 
+    //consulta 9: proveedor del cual más productos fueron vendidos en el último mes
 
-    //consulta 1: dias inventario promedio en el ultimo trimestre
+    public BestSupplierLastMonth  SupplierLastMonth() {
+        String sql = """
+                WITH Sales_Last_Month AS (
+                                  SELECT
+                                      id_product,
+                                      amount_product
+                                  FROM
+                                      Transactions
+                                  WHERE
+                                      type_transaction = 'Sale'
+                                    AND date_transaction >= date_trunc('month', NOW() - interval '1 month')
+                                    AND date_transaction < date_trunc('month', NOW())
+                              )
+                              SELECT
+                                  s.supplier_name AS "name_supplier",
+                                  SUM(slm.amount_product) AS "total_products_sold_last_month"
+                              FROM
+                                  Sales_Last_Month slm
+                                      JOIN
+                                  Supplier_Product sp ON slm.id_product = sp.product_idP
+                                      JOIN
+                                  Supplier s ON sp.supplier_idP = s.supplier_id
+                              GROUP BY
+                                  s.supplier_id, s.supplier_name
+                              ORDER BY
+                                  "total_products_sold_last_month" DESC
+                                  LIMIT 1;
+        """;
+        RowMapper<BestSupplierLastMonth> rowMapper = (rs, rowNum) -> new BestSupplierLastMonth(
+                rs.getString("name_supplier"),
+                rs.getInt("total_products_sold_last_month")
+        );
+        return jdbcTemplate.query(sql, rowMapper)
+                .stream()
+                .findFirst()
+                .orElse(null);
+
+    }
+
+
+    //consulta 5: promedio de ventas diarias en el último mes
 
     public List<DtoC5> AverageSalesPerMonth() {
         String sql = """ 
