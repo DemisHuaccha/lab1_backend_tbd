@@ -22,7 +22,7 @@ public class InventoryRepository {
         inventory.setId_productin(rs.getLong("id_productin"));
         inventory.setStock_inventory(rs.getInt("stock_inventory"));
         return inventory;
-    };
+    };  
 
     public List<Inventory> findAll() {
         String sql = "SELECT * FROM inventory";
@@ -68,5 +68,10 @@ public class InventoryRepository {
     public List<Inventory> findByProduct(Long id_productin) {
         String sql = "SELECT * FROM inventory WHERE id_productin = ?";
         return jdbcTemplate.query(sql, rowMapper, id_productin);
+    }
+
+    public List<Long> findProductIdsByStore(Long id_storein) {
+        String sql = "SELECT id_productin FROM inventory WHERE id_storein = ?";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> rs.getLong("id_productin"), id_storein);
     }
 }

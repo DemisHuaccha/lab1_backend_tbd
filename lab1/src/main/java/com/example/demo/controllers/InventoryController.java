@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import com.example.demo.entities.Inventory;
+import com.example.demo.entities.Products;
 import com.example.demo.services.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -48,5 +49,10 @@ public class InventoryController {
     @DeleteMapping("/delete/{id_storein}/{id_productin}")
     public int deleteInventory(@PathVariable Long id_storein, @PathVariable Long id_productin) {
         return inventoryService.delete(id_storein, id_productin);
+    }
+
+    @GetMapping("/store/{id_storein}/products")
+    public List<Products> getProductsByStore(@PathVariable Long id_storein) {
+        return inventoryService.getProductsByStore(id_storein);
     }
 }
