@@ -2,6 +2,7 @@ package com.example.demo.repositories;
 
 
 import com.example.demo.Dtos.Roles;
+import com.example.demo.Dtos.TransactionsByStore;
 import com.example.demo.Dtos.TransactionsTipes;
 import com.example.demo.Dtos.Unusual;
 import com.example.demo.entities.Transactions;
@@ -92,6 +93,54 @@ public class TransactionRepository {
                 rs.getInt("amount_product")
         );
         return jdbcTemplate.query(sql, rowMapper);
+    }
+
+    public List<TransactionsByStore> findTransactionsByStoreId(Long storeID) {
+        String sql = "SELECT " +
+                "t.id_transaction, " +
+                "t.type_transaction, " +
+                "t.date_transaction, " +
+                "t.amount_product, " +
+                "p.name_product, " +
+                "t.id_storeor, " +
+                "s_or.name_store AS origin_name, " +
+                "t.id_storede, " +
+                "s_de.name_store AS dest_name " +
+                "FROM transactions t " +
+                "JOIN products p ON t.id_product = p.id_product " +
+                "LEFT JOIN stores s_or ON t.id_storeor = s_or.id_store " +
+                "LEFT JOIN stores s_de ON t.id_storede = s_de.id_store " +
+                "WHERE t.id_storeor = ? OR t.id_storede = ? " +
+                "ORDER BY t.date_transaction DESC";
+        RowMapper<TransactionsByStore> transactions = (rs, rowNum) -> {
+            TransactionsByStore transactionsByStore = new TransactionsByStore();
+            transactionsByStore.setIdTransaction(rs.getLong("id_transaction"));
+            transactionsByStore.setTypeTransaction(rs.getString("type_transaction"));
+            transactionsByStore.setDateTransaction(rs.getDate("date_transaction"));
+            transactionsByStore.setAmountProduct(rs.getInt("amount_product"));
+            transactionsByStore.setNameProduct(rs.getString("name_product"));
+
+            // Manejo de nulos
+            String origen = rs.getString("origin_name");
+            String destino = rs.getString("dest_name");
+            transactionsByStore.setNameStoreOR(origen != null ? origen : "Externo");
+            transactionsByStore.setNameStoreDE(destino != null ? destino : "Externo");
+
+            // Lógica de Flujo: Comparar IDs
+            long idOrigin = rs.getLong("id_storeor");
+            long idDestiny = rs.getLong("id_storede");
+
+            if (idDestiny == storeID) {
+                transactionsByStore.setFlow("ENTRADA (+)");
+            } else if (idOrigin == storeID) {
+                transactionsByStore.setFlow("SALIDA (-)");
+            } else {
+                transactionsByStore.setFlow("NEUTRO");
+            }
+            return transactionsByStore;
+        };
+
+        return jdbcTemplate.query(sql, transactions, storeID, storeID);
     }
 
     public int transferInventory(Long id_product,Long id_store_origin, Long id_store_destiny, int quantity) {

@@ -1,9 +1,12 @@
 package com.example.demo.services;
 
+import com.example.demo.Dtos.TransactionsByStore;
 import com.example.demo.Dtos.Transfer;
 import com.example.demo.Dtos.Unusual;
 import com.example.demo.entities.Transactions;
+import com.example.demo.entities.Users;
 import com.example.demo.repositories.TransactionRepository;
+import com.example.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +17,7 @@ import java.util.List;
 public class TransactionService {
     @Autowired
     private TransactionRepository transactionRepository;
+    private UserRepository userRepository;
     private Transfer transfer;
 
     // Finders
@@ -42,5 +46,21 @@ public class TransactionService {
                 transfer.getId_store_origin(),
                 transfer.getId_store_destiny(),
                 transfer.getQuantity());
+    }
+
+    public List<TransactionsByStore> getTransactionsByUserID(Long id_user){
+        try {
+            Users user = userRepository.findById(id_user);
+
+            if (user == null || user.getStoreU_id() == null){
+                throw new RuntimeException("Usuario no encontrado o sin tienda asignada");
+            }
+
+            return transactionRepository.findTransactionsByStoreId(user.getStoreU_id());
+
+
+        } catch (org.springframework.dao.EmptyResultDataAccessException e) {
+            throw new RuntimeException("Usuario no encontrado");
+        }
     }
 }

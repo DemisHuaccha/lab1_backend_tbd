@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.Dtos.TransactionsByStore;
 import com.example.demo.Dtos.Transfer;
 import com.example.demo.Dtos.Unusual;
 import com.example.demo.entities.Transactions;
@@ -44,6 +45,12 @@ public class TransactionController {
     @GetMapping("/unusual")
     public ResponseEntity<List<Unusual>> getUnusualTransactions() {
         List<Unusual> transactions = transactionService.unusualTransaction();
+        return ResponseEntity.ok(transactions);
+    }
+
+    @GetMapping("/myStoreTransactions")
+    public ResponseEntity<List<TransactionsByStore>> getStoreTransactions(@RequestParam Long id_user){
+        List<TransactionsByStore> transactions = transactionService.getTransactionsByUserID(id_user);
         return ResponseEntity.ok(transactions);
     }
 
