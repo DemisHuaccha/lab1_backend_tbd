@@ -19,7 +19,7 @@ public class StoreController {
 
     //Finders
 
-    @GetMapping
+    @GetMapping("")
     public List<Stores> getStores(){ return storeService.getAll(); }
 
     @GetMapping("/{city}")

@@ -36,9 +36,9 @@ public class StoreRepository {
         return jdbcTemplate.query(sql, rowMapper, city);
     }
 
-    public Stores findById(Long id) {
+    public Stores findById(Long id_store) {
         String sql = "SELECT * FROM stores WHERE id_store = ?";
-        return jdbcTemplate.queryForObject(sql, rowMapper, id);
+        return jdbcTemplate.queryForObject(sql, rowMapper, id_store);
     }
 
     public Stores findByName(String name) {

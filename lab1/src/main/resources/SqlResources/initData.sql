@@ -4,7 +4,7 @@ BEGIN
 
 -- 1. POBLAMIENTO DE LA TABLA 'Stores' (8 Registros)
 -----------------------------------------------------------------
-INSERT INTO Stores (id_store, name_store, direction_store, city_store) VALUES
+INSERT INTO Stores (id_store, name_store, address_store, city_store) VALUES
                                                                            (1, 'Tienda Central Santiago', 'Av. Libertador 100', 'Santiago'),
                                                                            (2, 'Tienda Costera Valparaíso', 'Calle Prat 250', 'Valparaíso'),
                                                                            (3, 'Tienda Sur Concepción', 'Bulnes 50', 'Concepción'),
@@ -48,22 +48,22 @@ INSERT INTO Supplier (supplier_id, supplier_name) VALUES
 -----------------------------------------------------------------
 -- 1 Admin (NULL Store)
 INSERT INTO Users (id_user, name_user, email_user, password_user, role, id_storeU) VALUES
-    (1001, 'Ana Gutiérrez', 'ana.gutierrez@sys.com', 'hashedpass123', 'Admin', NULL);
+    (1001, 'Ana Gutiérrez', 'ana.gutierrez@sys.com', 'hashedpass123', 'SUPERADMINISTRATOR', NULL);
 -- Managers (T1, T4, T7)
 INSERT INTO Users (id_user, name_user, email_user, password_user, role, id_storeU) VALUES
-                                                                                       (1002, 'Benjamín Soto', 'benjamin.soto@stgo.com', 'hashedpass456', 'Manager', 1),
-                                                                                       (1007, 'Gloria Hernández', 'gloria.h@antofa.com', 'hashedpass999', 'Manager', 4),
-                                                                                       (1011, 'Horacio Izquierdo', 'horacio.i@serena.com', 'hashedpass111', 'Manager', 7);
+                                                                                       (1002, 'Benjamín Soto', 'benjamin.soto@stgo.com', 'hashedpass456', 'ADMINISTRATOR', 1),
+                                                                                       (1007, 'Gloria Hernández', 'gloria.h@antofa.com', 'hashedpass999', 'ADMINISTRATOR', 4),
+                                                                                       (1011, 'Horacio Izquierdo', 'horacio.i@serena.com', 'hashedpass111', 'ADMINISTRATOR', 7);
 -- Employees
 INSERT INTO Users (id_user, name_user, email_user, password_user, role, id_storeU) VALUES
-                                                                                       (1003, 'Carla Díaz', 'carla.diaz@valpo.com', 'hashedpass789', 'Employee', 2),
-                                                                                       (1004, 'Daniel Flores', 'daniel.flores@valpo.com', 'hashedpass012', 'Employee', 2),
-                                                                                       (1005, 'Elena Rojas', 'elena.rojas@concep.com', 'hashedpass345', 'Employee', 3),
-                                                                                       (1006, 'Felipe Muñoz', 'felipe.munoz@concep.com', 'hashedpass678', 'Employee', 3),
-                                                                                       (1008, 'Héctor Ibarra', 'hector.i@ranca.com', 'hashedpass777', 'Employee', 5),
-                                                                                       (1009, 'Isabel Jaramillo', 'isabel.j@iquique.com', 'hashedpass666', 'Employee', 6),
-                                                                                       (1010, 'Javier Leiva', 'javier.l@iquique.com', 'hashedpass555', 'Employee', 6),
-                                                                                       (1012, 'Karla Núñez', 'karla.n@temuco.com', 'hashedpass222', 'Employee', 8);
+                                                                                       (1003, 'Carla Díaz', 'carla.diaz@valpo.com', 'hashedpass789', 'EMPLOYEE', 2),
+                                                                                       (1004, 'Daniel Flores', 'daniel.flores@valpo.com', 'hashedpass012', 'EMPLOYEE', 2),
+                                                                                       (1005, 'Elena Rojas', 'elena.rojas@concep.com', 'hashedpass345', 'EMPLOYEE', 3),
+                                                                                       (1006, 'Felipe Muñoz', 'felipe.munoz@concep.com', 'hashedpass678', 'EMPLOYEE', 3),
+                                                                                       (1008, 'Héctor Ibarra', 'hector.i@ranca.com', 'hashedpass777', 'EMPLOYEE', 5),
+                                                                                       (1009, 'Isabel Jaramillo', 'isabel.j@iquique.com', 'hashedpass666', 'EMPLOYEE', 6),
+                                                                                       (1010, 'Javier Leiva', 'javier.l@iquique.com', 'hashedpass555', 'EMPLOYEE', 6),
+                                                                                       (1012, 'Karla Núñez', 'karla.n@temuco.com', 'hashedpass222', 'EMPLOYEE', 8);
 
 -- 5. POBLAMIENTO DE LA TABLA 'Supplier_Product' (15 Registros)
 ---------------------------------------------------------------------------------
