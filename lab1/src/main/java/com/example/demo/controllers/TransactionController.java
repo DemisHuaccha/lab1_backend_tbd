@@ -42,15 +42,34 @@ public class TransactionController {
         List<Transactions> transactions = transactionService.getTransactionsByDate(date);
         return ResponseEntity.ok(transactions);
     }
-    @GetMapping("/unusual")
-    public ResponseEntity<List<Unusual>> getUnusualTransactions() {
-        List<Unusual> transactions = transactionService.unusualTransaction();
+
+    @GetMapping("/searchByProduct")
+    public ResponseEntity<List<Transactions>> getTransactionsByProduct(@RequestParam Long id_product) {
+        List<Transactions> transactions = transactionService.getTransactionsByIDProduct(id_product);
         return ResponseEntity.ok(transactions);
     }
 
     @GetMapping("/myStoreTransactions")
-    public ResponseEntity<List<TransactionsByStore>> getStoreTransactions(@RequestParam Long id_user){
-        List<TransactionsByStore> transactions = transactionService.getTransactionsByUserID(id_user);
+    public ResponseEntity<List<Transactions>> getMyStoreTransactions(@RequestParam Long id_store) {
+        List<Transactions> transactions = transactionService.getTransactionsByIDStore(id_store);
+        return ResponseEntity.ok(transactions);
+    }
+
+    @GetMapping("/myStoreOriginTransactions")
+    public ResponseEntity<List<Transactions>> getMyStoreOriginTransactions(@RequestParam Long id_store) {
+        List<Transactions> transactions = transactionService.getTransactionsByIDStoreOR(id_store);
+        return ResponseEntity.ok(transactions);
+    }
+
+    @GetMapping("/myStoreDETransactions")
+    public ResponseEntity<List<Transactions>> getMyStoreDETransactions(@RequestParam Long id_store) {
+        List<Transactions> transactions = transactionService.getTransactionsByIDStoreDE(id_store);
+        return ResponseEntity.ok(transactions);
+    }
+
+    @GetMapping("/unusual")
+    public ResponseEntity<List<Unusual>> getUnusualTransactions() {
+        List<Unusual> transactions = transactionService.unusualTransaction();
         return ResponseEntity.ok(transactions);
     }
 

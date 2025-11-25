@@ -25,6 +25,11 @@ public class TransactionService {
     public Transactions getTransactionById(Long id_transaction) { return transactionRepository.findById( id_transaction ); }
     public List<Transactions> getTransactionsByType(String type_transaction) { return transactionRepository.findByType_transaction(type_transaction) ; }
     public List<Transactions> getTransactionsByDate(Date date_transaction) { return transactionRepository.findByDate_transaction(date_transaction) ; }
+    public List<Transactions> getTransactionsByIDProduct(Long id_product) {return transactionRepository.findById_Product(id_product);}
+    public List<Transactions> getTransactionsByIDStore(Long id_store) {return transactionRepository.findById_store(id_store);}
+    public List<Transactions> getTransactionsByIDStoreOR(Long id_storeOR) {return transactionRepository.findById_storeOR(id_storeOR);}
+    public List<Transactions> getTransactionsByIDStoreDE(Long id_storeDE) {return transactionRepository.findById_storeDE(id_storeDE);}
+
 
     // Create
     public int createTransaction(Transactions transaction) { return transactionRepository.save(transaction); }
@@ -48,19 +53,5 @@ public class TransactionService {
                 transfer.getQuantity());
     }
 
-    public List<TransactionsByStore> getTransactionsByUserID(Long id_user){
-        try {
-            Users user = userRepository.findById(id_user);
 
-            if (user == null || user.getStoreU_id() == null){
-                throw new RuntimeException("Usuario no encontrado o sin tienda asignada");
-            }
-
-            return transactionRepository.findTransactionsByStoreId(user.getStoreU_id());
-
-
-        } catch (org.springframework.dao.EmptyResultDataAccessException e) {
-            throw new RuntimeException("Usuario no encontrado");
-        }
-    }
 }
