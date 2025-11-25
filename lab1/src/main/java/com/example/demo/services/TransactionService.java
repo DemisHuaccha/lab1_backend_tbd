@@ -26,7 +26,7 @@ public class TransactionService {
     public List<Transactions> getTransactionsByType(String type_transaction) { return transactionRepository.findByType_transaction(type_transaction) ; }
     public List<Transactions> getTransactionsByDate(Date date_transaction) { return transactionRepository.findByDate_transaction(date_transaction) ; }
     public List<Transactions> getTransactionsByIDProduct(Long id_product) {return transactionRepository.findById_Product(id_product);}
-    public List<Transactions> getTransactionsByIDStore(Long id_store) {return transactionRepository.findById_store(id_store);}
+    public List<TransactionsByStore> getTransactionsByIDStore(Long id_store) {return transactionRepository.findById_store(id_store);}
     public List<Transactions> getTransactionsByIDStoreOR(Long id_storeOR) {return transactionRepository.findById_storeOR(id_storeOR);}
     public List<Transactions> getTransactionsByIDStoreDE(Long id_storeDE) {return transactionRepository.findById_storeDE(id_storeDE);}
 
@@ -52,6 +52,5 @@ public class TransactionService {
                 transfer.getId_store_destiny(),
                 transfer.getQuantity());
     }
-
 
 }

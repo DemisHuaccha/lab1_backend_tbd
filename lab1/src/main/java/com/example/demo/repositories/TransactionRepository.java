@@ -28,6 +28,9 @@ public class TransactionRepository {
 
         transaction.setDate_transaction(rs.getDate("date_transaction"));
         transaction.setAmount_product(rs.getInt("amount_product"));
+        transaction.setId_storeDE(rs.getLong("id_storede"));
+        transaction.setId_storeOR(rs.getLong("id_storeor"));
+        transaction.setId_product(rs.getLong("id_product"));
         return transaction;
     };
 
@@ -56,9 +59,52 @@ public class TransactionRepository {
         return jdbcTemplate.query(sql, rowMapper, id_product);
     }
 
-    public List<Transactions> findById_store(Long id_store) {
-        String sql = "SELECT * FROM transactions WHERE id_storeOR = ? OR id_storeDE = ?";
-        return jdbcTemplate.query(sql, rowMapper, id_store, id_store);
+    public List<TransactionsByStore> findById_store(Long storeID) {
+        String sql = "SELECT " +
+                "t.id_transaction, " +
+                "t.type_transaction, " +
+                "t.date_transaction, " +
+                "t.amount_product, " +
+                "p.name_product, " +
+                "t.id_storeor, " +
+                "s_or.name_store AS origin_name, " +
+                "t.id_storede, " +
+                "s_de.name_store AS dest_name " +
+                "FROM transactions t " +
+                "JOIN products p ON t.id_product = p.id_product " +
+                "LEFT JOIN stores s_or ON t.id_storeor = s_or.id_store " +
+                "LEFT JOIN stores s_de ON t.id_storede = s_de.id_store " +
+                "WHERE t.id_storeor = ? OR t.id_storede = ? " +
+                "ORDER BY t.date_transaction DESC";
+        RowMapper<TransactionsByStore> transactions = (rs, rowNum) -> {
+            TransactionsByStore transactionsByStore = new TransactionsByStore();
+            transactionsByStore.setIdTransaction(rs.getLong("id_transaction"));
+            transactionsByStore.setTypeTransaction(rs.getString("type_transaction"));
+            transactionsByStore.setDateTransaction(rs.getDate("date_transaction"));
+            transactionsByStore.setAmountProduct(rs.getInt("amount_product"));
+            transactionsByStore.setNameProduct(rs.getString("name_product"));
+
+            // Manejo de nulos
+            String origen = rs.getString("origin_name");
+            String destino = rs.getString("dest_name");
+            transactionsByStore.setNameStoreOR(origen != null ? origen : "Externo");
+            transactionsByStore.setNameStoreDE(destino != null ? destino : "Externo");
+
+            // Lógica de Flujo: Comparar IDs
+            long idOrigin = rs.getLong("id_storeor");
+            long idDestiny = rs.getLong("id_storede");
+
+            if (idDestiny == storeID) {
+                transactionsByStore.setFlow("ENTRADA (+)");
+            } else if (idOrigin == storeID) {
+                transactionsByStore.setFlow("SALIDA (-)");
+            } else {
+                transactionsByStore.setFlow("NEUTRO");
+            }
+            return transactionsByStore;
+        };
+
+        return jdbcTemplate.query(sql, transactions, storeID, storeID);
     }
 
     public List<Transactions> findById_storeOR(Long id_storeOR) {
@@ -72,11 +118,15 @@ public class TransactionRepository {
     }
 
     public int save(Transactions transaction) {
-        String sql = "INSERT INTO transactions (type_transaction, date_transaction, amount_product) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO transactions (type_transaction, date_transaction, amount_product, id_product, id_storeOR, id_storeDE) VALUES (?, ?, ?, ?, ?, ?)";
         return jdbcTemplate.update(sql,
-                transaction.getType_transaction(),
+                transaction.getType_transaction().toString(),
                 transaction.getDate_transaction(),
-                transaction.getAmount_product());
+                transaction.getAmount_product(),
+                transaction.getId_product(),
+                transaction.getId_storeOR(),
+                transaction.getId_storeDE()
+        );
     }
 
     public int update(Transactions transaction) {

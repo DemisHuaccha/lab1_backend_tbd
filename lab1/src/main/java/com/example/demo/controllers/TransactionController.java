@@ -49,9 +49,10 @@ public class TransactionController {
         return ResponseEntity.ok(transactions);
     }
 
+
     @GetMapping("/myStoreTransactions")
-    public ResponseEntity<List<Transactions>> getMyStoreTransactions(@RequestParam Long id_store) {
-        List<Transactions> transactions = transactionService.getTransactionsByIDStore(id_store);
+    public ResponseEntity<List<TransactionsByStore>> getStoreTransactions(@RequestParam Long id_store){
+        List<TransactionsByStore> transactions = transactionService.getTransactionsByIDStore(id_store);
         return ResponseEntity.ok(transactions);
     }
 
