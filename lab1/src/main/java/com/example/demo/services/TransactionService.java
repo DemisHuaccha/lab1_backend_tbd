@@ -50,7 +50,7 @@ public class TransactionService {
                 transfer.getId_product(),
                 transfer.getId_store_origin(),
                 transfer.getId_store_destiny(),
-                transfer.getQuantity());
+                transfer.getAmount_product());
     }
 
 }

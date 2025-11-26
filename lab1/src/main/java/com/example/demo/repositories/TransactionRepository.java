@@ -158,15 +158,15 @@ public class TransactionRepository {
                 "        ON ranked.id_product = products.id_product\n" +
                 "WHERE number_row <= 3;";
         RowMapper<Unusual> rowMapper = (rs, rowNum) -> new Unusual(
-                rs.getString("name_store"),
                 rs.getString("name_product"),
+                rs.getString("name_store"),
                 rs.getInt("amount_product")
         );
         return jdbcTemplate.query(sql, rowMapper);
     }
 
-    public int transferInventory(Long id_product,Long id_store_origin, Long id_store_destiny, int quantity) {
+    public int transferInventory(Long id_product,Long id_store_origin, Long id_store_destiny, int amount_product) {
         String sql = "CALL transferir_inventario(?, ?, ?, ?)";
-        return jdbcTemplate.update(sql, id_product, id_store_origin, id_store_destiny, quantity);
+        return jdbcTemplate.update(sql, id_product, id_store_origin, id_store_destiny, amount_product);
     }
 }
