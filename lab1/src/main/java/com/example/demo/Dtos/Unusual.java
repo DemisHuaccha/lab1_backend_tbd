@@ -2,13 +2,15 @@ package com.example.demo.Dtos;
 
 public class Unusual {
     private String product_name;
+    private Long id_store;
     private String store_name;
-    private Integer quantity;
+    private Integer amount_product;
 
-    public Unusual(String product_name, String store_name, Integer quantity) {
-        this.product_name = product_name;
+    public Unusual(Long id_store, String store_name, String product_name, int amount_product) {
+        this.id_store = id_store;
         this.store_name = store_name;
-        this.quantity = quantity;
+        this.product_name = product_name;
+        this.amount_product = amount_product;
     }
 
     //Getters
@@ -18,9 +20,8 @@ public class Unusual {
     public String getStore_name() {
         return store_name;
     }
-    public Integer getQuantity() {
-        return quantity;
-    }
+    public int getAmount_product() {return amount_product;}
+    public Long getId_store() {return id_store;}
 
     //Setters
     public void setProduct_name(String product_name) {
@@ -29,9 +30,8 @@ public class Unusual {
     public void setStore_name(String store_name) {
         this.store_name = store_name;
     }
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
+    public void setAmount_product(int amount_product) {this.amount_product = amount_product; }
+    public void setId_store(Long id_store) {this.id_store = id_store;}
 
 
 }

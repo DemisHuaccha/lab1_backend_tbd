@@ -48,8 +48,8 @@ public class TransactionService {
     public int transferInventory(Transfer transfer) {
         return transactionRepository.transferInventory(
                 transfer.getId_product(),
-                transfer.getId_store_origin(),
-                transfer.getId_store_destiny(),
+                transfer.getId_storeOR(),
+                transfer.getId_storeDE(),
                 transfer.getAmount_product());
     }
 

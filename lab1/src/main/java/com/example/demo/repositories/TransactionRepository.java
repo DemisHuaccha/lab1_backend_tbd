@@ -143,7 +143,7 @@ public class TransactionRepository {
     }
 
     public List<Unusual> unusualTransactions() {
-        String sql = "SELECT stores.name_store, amount_product , products.name_product FROM (\n" +
+        String sql = "SELECT stores.name_store,id_storeor, amount_product , products.name_product FROM (\n" +
                 "    Select\n" +
                 "        id_storeor,\n" +
                 "        amount_product,\n" +
@@ -158,8 +158,9 @@ public class TransactionRepository {
                 "        ON ranked.id_product = products.id_product\n" +
                 "WHERE number_row <= 3;";
         RowMapper<Unusual> rowMapper = (rs, rowNum) -> new Unusual(
-                rs.getString("name_product"),
+                rs.getLong("id_storeor"),
                 rs.getString("name_store"),
+                rs.getString("name_product"),
                 rs.getInt("amount_product")
         );
         return jdbcTemplate.query(sql, rowMapper);
