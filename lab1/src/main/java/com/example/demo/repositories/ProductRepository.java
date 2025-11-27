@@ -148,6 +148,7 @@ public class ProductRepository {
                 SELECT
                     p.name_product AS "top_5_product",
                     g.name_store AS "name_store",
+                    g.id_store AS "id_store",
                     COALESCE((
                                  SELECT SUM(t.amount_product)
                                  FROM Transactions t
@@ -166,7 +167,8 @@ public class ProductRepository {
         RowMapper<Top5> rowMapper = (rs, rowNum) -> new Top5(
                 rs.getString("top_5_product"),
                 rs.getString("name_store"),
-                rs.getInt("quantity_sold")
+                rs.getInt("quantity_sold"),
+                rs.getLong("id_store")
         );
         return jdbcTemplate.query(sql, rowMapper);
     }
