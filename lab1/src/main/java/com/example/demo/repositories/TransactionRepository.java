@@ -118,7 +118,7 @@ public class TransactionRepository {
     }
 
     public int save(Transactions transaction) {
-        String sql = "INSERT INTO transactions (type_transaction, date_transaction, amount_product, id_product, id_storeOR, id_storeDE) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO transactions (type_transaction, date_transaction, amount_product, id_product, id_storeOR, id_storeDE) VALUES (?, ?, ?, ?, ?, ?    )";
         return jdbcTemplate.update(sql,
                 transaction.getType_transaction().toString(),
                 transaction.getDate_transaction(),

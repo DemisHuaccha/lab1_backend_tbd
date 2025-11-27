@@ -23,6 +23,7 @@ FROM Stores s
 SELECT
     p.name_product AS "top_5_product",
     g.name_store AS "name_store",
+    g.name_store AS "id_store",
     COALESCE((
                  SELECT SUM(t.amount_product)
                  FROM Transactions t
