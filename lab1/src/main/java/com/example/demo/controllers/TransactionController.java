@@ -68,6 +68,12 @@ public class TransactionController {
         return ResponseEntity.ok(transactions);
     }
 
+    @GetMapping("/recentTransactions")
+    public ResponseEntity<List<Transactions>> getRecentTransactions() {
+        List<Transactions> transactions = transactionService.getRecentTransactions();
+        return ResponseEntity.ok(transactions);
+    }
+
     @GetMapping("/unusual")
     public ResponseEntity<List<Unusual>> getUnusualTransactions() {
         List<Unusual> transactions = transactionService.unusualTransaction();

@@ -29,7 +29,7 @@ public class TransactionService {
     public List<TransactionsByStore> getTransactionsByIDStore(Long id_store) {return transactionRepository.findById_store(id_store);}
     public List<Transactions> getTransactionsByIDStoreOR(Long id_storeOR) {return transactionRepository.findById_storeOR(id_storeOR);}
     public List<Transactions> getTransactionsByIDStoreDE(Long id_storeDE) {return transactionRepository.findById_storeDE(id_storeDE);}
-
+    public List<Transactions> getRecentTransactions() {return transactionRepository.recentTransactions();}
 
     // Create
     public int createTransaction(Transactions transaction) { return transactionRepository.save(transaction); }

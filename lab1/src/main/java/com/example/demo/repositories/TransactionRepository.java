@@ -142,6 +142,15 @@ public class TransactionRepository {
         return jdbcTemplate.update(sql, id);
     }
 
+    public List<Transactions> recentTransactions() {
+        String sql = "SELECT * FROM transactions " +
+                "WHERE" +
+                "    date_transaction >= NOW() - INTERVAL '7 days'\n" +
+                "ORDER BY" +
+                "    date_transaction DESC;";
+        return jdbcTemplate.query(sql, rowMapper);
+    }
+
     public List<Unusual> unusualTransactions() {
         String sql = "SELECT stores.name_store,id_storeor, amount_product , products.name_product FROM (\n" +
                 "    Select\n" +
