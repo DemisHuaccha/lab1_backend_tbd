@@ -231,7 +231,7 @@ public class ProductRepository {
                 ORDER BY average_days_in_inventory ASC;
                     """;
         RowMapper<DtoC1> rowMapper = (rs, rowNum) -> new DtoC1(
-                rs.getString("product_name"),
+                rs.getString("name_product"),
                 rs.getInt("average_days_in_inventory")
         );
 
