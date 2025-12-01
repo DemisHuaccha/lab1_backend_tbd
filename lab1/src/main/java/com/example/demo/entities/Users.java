@@ -8,7 +8,7 @@ public class Users {
     private String email_user;
     private String password_user;
     private Roles role;
-    private Long storeU_id;
+    private Long id_storeU;
 
     // Getters
     public Long getId_user() { return id_user; }
@@ -16,7 +16,7 @@ public class Users {
     public String getEmail_user() { return email_user; }
     public String getPassword_user() { return password_user; }
     public Roles getRole() { return role; }
-    public Long getStoreU_id() { return storeU_id; }
+    public Long getId_storeU() { return id_storeU; }
 
     //Setters
     public void setId_user(Long id_user) {
@@ -34,5 +34,5 @@ public class Users {
     public void setRole(Roles role) {
         this.role = role;
     }
-    public void setStoreU_id(Long storeU_id) {this.storeU_id = storeU_id;}
+    public void setId_storeU(Long id_storeU) {this.id_storeU = id_storeU;}
 }

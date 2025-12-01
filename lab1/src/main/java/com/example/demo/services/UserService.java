@@ -37,6 +37,10 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+    public List<Users> getUsersByIdStore(Long id_storeU) { return userRepository.findByIdStore(id_storeU); }
+
+    public List<Users> getUsersByStoreAndNameUser(Long id_storeU, String name_user) { return userRepository.findByStoreAndNameUser(id_storeU, name_user); }
+
     public Optional<Users> getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
@@ -46,7 +50,7 @@ public class UserService {
         String password = request.getPassword();
         Roles role = request.getRole();
         String username= request.getName_user();
-        Long storeU_id = request.getStoreU_id();
+        Long id_storeU = request.getStoreU_id();
         Optional<Users> user = userRepository.findByEmail(email);
         if(user.isEmpty()){
             Users new_user = new Users();
@@ -54,7 +58,7 @@ public class UserService {
             new_user.setPassword_user(PasswordUtil.hashPassword(password));
             new_user.setRole(role);
             new_user.setName_user(username);
-            new_user.setStoreU_id(storeU_id);
+            new_user.setId_storeU(id_storeU);
             userRepository.save(new_user);
             return ResponseEntity.status(HttpStatus.CREATED).body("Usuario registrado correctamente. Ahora debe iniciar sesión.");
         }
@@ -79,7 +83,7 @@ public class UserService {
                     return makeUser(request);
                 }
                 else{
-                    request.setStoreU_id(userAdmin.get().getStoreU_id());
+                    request.setStoreU_id(userAdmin.get().getId_storeU());
                     return makeUser(request);
                 }
             }
@@ -111,11 +115,11 @@ public class UserService {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no encontrado");
         }
         else if (PasswordUtil.verifyPassword(password, user.get().getPassword_user())) {
-            String token = jwtUtil.generateToken(email, user.get().getRole(), user.get().getStoreU_id(), user.get().getName_user());
+            String token = jwtUtil.generateToken(email, user.get().getRole(), user.get().getId_storeU(), user.get().getName_user());
             return ResponseEntity.ok(Map.of("token", token));
         }
         else if (user.get().getPassword_user().equals(password)) {
-            String token = jwtUtil.generateToken(email, user.get().getRole(), user.get().getStoreU_id(), user.get().getName_user());
+            String token = jwtUtil.generateToken(email, user.get().getRole(), user.get().getId_storeU(), user.get().getName_user());
             return ResponseEntity.ok(Map.of("token", token));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");

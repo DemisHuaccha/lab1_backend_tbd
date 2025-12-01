@@ -27,8 +27,8 @@ public class UserRepository {
         Roles role = Roles.valueOf(roleStr.toUpperCase());
         user.setRole(role);
 
-        Long storeU_id = rs.getLong("id_storeU");
-        user.setStoreU_id(storeU_id);
+        Long id_storeU = rs.getLong("id_storeU");
+        user.setId_storeU(id_storeU);
 
 
         return user;
@@ -44,6 +44,16 @@ public class UserRepository {
         return jdbcTemplate.queryForObject(sql, rowMapper, id);
     }
 
+    public List<Users> findByIdStore(Long idStore) {
+        String sql = "SELECT * FROM users WHERE id_storeU = ?";
+        return jdbcTemplate.query(sql, rowMapper, idStore);
+    }
+
+    public List<Users> findByStoreAndNameUser(Long id_store, String name_user) {
+        String sql = "SELECT * FROM users WHERE id_storeU = ? AND name_user LIKE 'name_user%'";
+        return jdbcTemplate.query(sql, rowMapper, id_store, name_user);
+    }
+
     public Optional<Users> findByEmail(String email) {
         String sql = "SELECT * FROM users WHERE email_user = ?";
         try {
@@ -56,7 +66,7 @@ public class UserRepository {
 
     public int save(Users user) {
         String sql = "INSERT INTO users (name_user, email_user, password_user, role, id_storeU) VALUES (?, ?, ?, ?, ?)";
-        return jdbcTemplate.update(sql, user.getName_user(), user.getEmail_user(), user.getPassword_user(), user.getRole().name(), user.getStoreU_id());
+        return jdbcTemplate.update(sql, user.getName_user(), user.getEmail_user(), user.getPassword_user(), user.getRole().name(), user.getId_storeU());
     }
 
     public int update(Users user) {

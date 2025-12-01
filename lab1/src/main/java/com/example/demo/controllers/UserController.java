@@ -26,6 +26,14 @@ public class UserController {
         return userService.getUserById(id);
     }
 
+    @GetMapping("/UsersByStore")
+    public List<Users> getUsersByStore(@RequestParam Long id_storeU) {return userService.getUsersByIdStore(id_storeU);}
+
+    @GetMapping("/FindByNameAndStore")
+    public List<Users> findByNameAndStore(@RequestParam Long id_storeU, @RequestParam String name_user) {
+        return userService.getUsersByStoreAndNameUser(id_storeU, name_user);
+    }
+
 
     @PutMapping("/update")
     public ResponseEntity<String> updateUser(@RequestBody Users user) {
