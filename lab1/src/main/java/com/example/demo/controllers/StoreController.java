@@ -22,16 +22,16 @@ public class StoreController {
     @GetMapping("")
     public List<Stores> getStores(){ return storeService.getAll(); }
 
-    @GetMapping("/{city}")
+    @GetMapping("/byCity/{city}")
     public List<Stores> getStoresByCity(@PathVariable String city){ return storeService.getByCity(city); }
 
-    @GetMapping("/{id}")
+    @GetMapping("/byId/{id}")
     public Stores getStoreById(@PathVariable Long id){ return storeService.getById(id); }
 
     @GetMapping("/{name}")
     public Stores getStoreByName(@PathVariable String name){ return storeService.getByName(name); }
 
-    @GetMapping("/{address}")
+    @GetMapping("/byAddress/{address}")
     public Stores getStoreByAddress(@PathVariable String address){ return storeService.getByAddress(address);}
 
     // Create

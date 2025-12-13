@@ -325,7 +325,7 @@ public class ProductRepository {
         RowMapper<DtoC5> rowMapper = (rs, rowNum) -> new DtoC5(
                 rs.getString("month_name"),
                 rs.getInt("year"),
-                rs.getInt("average_daily_sales"),
+                rs.getFloat("average_daily_sales"),
                 rs.getInt("difference_from_previous_month")
         );
 

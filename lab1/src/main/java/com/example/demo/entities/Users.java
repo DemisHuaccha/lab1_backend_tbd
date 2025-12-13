@@ -10,7 +10,7 @@ public class Users {
     private Roles role;
     private Long id_storeU;
 
-    // Getters
+    // Getters  
     public Long getId_user() { return id_user; }
     public String getName_user() { return name_user; }
     public String getEmail_user() { return email_user; }

@@ -43,7 +43,8 @@ public class StoreRepository {
 
     public Stores findByName(String name) {
         String sql = "SELECT * FROM stores WHERE name_store = ?";
-        return jdbcTemplate.queryForObject(sql, rowMapper, name);
+        List<Stores> result = jdbcTemplate.query(sql, rowMapper, name);
+        return result.isEmpty() ? null : result.get(0);
     }
 
     public Stores findByAddress(String address) {
@@ -85,8 +86,8 @@ public class StoreRepository {
 
         RowMapper<SummaryStockStore> rowMapper = (rs, rowNum) -> {
             SummaryStockStore summary = new SummaryStockStore();
-            summary.setIdTienda(rs.getLong("id_tienda"));
-            summary.setNameStore(rs.getString("nombre_tienda"));
+            summary.setIdTienda(rs.getLong("id_store"));
+            summary.setNameStore(rs.getString("name_store"));
             summary.setTotalPriceInventory(rs.getDouble("valor_total_inventario"));
             summary.setUniqueProduct(rs.getInt("productos_unicos"));
             return summary;

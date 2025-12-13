@@ -26,8 +26,8 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    @GetMapping("/UsersByStore")
-    public List<Users> getUsersByStore(@RequestParam Long id_storeU) {return userService.getUsersByIdStore(id_storeU);}
+    @GetMapping("/UsersByStore/{id_storeU}")
+    public List<Users> getUsersByStore(@PathVariable Long id_storeU) {return userService.getUsersByIdStore(id_storeU);}
 
     @GetMapping("/FindByNameAndStore")
     public List<Users> findByNameAndStore(@RequestParam Long id_storeU, @RequestParam String name_user) {
